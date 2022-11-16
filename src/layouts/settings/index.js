@@ -291,7 +291,7 @@ function Dashboard() {
       <DashboardNavbar />
       <MDBox py={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
 
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
@@ -385,7 +385,7 @@ function Dashboard() {
                 </MDButton>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={6}>
 
             <Card sx={{ minWidth: 275 }}>
