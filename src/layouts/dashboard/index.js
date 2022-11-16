@@ -92,7 +92,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="business_icon"
-                title="Total Dispachers"
+                title="Total Tycoon"
                 count={Dispachers}
                
               />
@@ -104,7 +104,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="error"
                 icon="hotel_icon"
-                title="Total Hotels"
+                title="Total Subscriptions"
                 count={HotelData}
                
               />
@@ -114,8 +114,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="warning"
-                icon="directions_car_icon"
-                title="Total Drivers"
+                icon="business_icon"
+                title="Total Shops"
                 count={Drivers}
                
               />
@@ -126,7 +126,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="secondary"
                 icon="person_icon"
-                title="Total Guests"
+                title="Total Managers"
                 count={Guests}
               />
             </MDBox>

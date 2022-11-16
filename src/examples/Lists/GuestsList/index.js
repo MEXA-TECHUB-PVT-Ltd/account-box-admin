@@ -10,6 +10,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
+import Img from "assets/images/logo2.jpg"
 
 function ProfilesList({ title, shadow, idProfileUser }) {
   const [driversDispachers, setDriversDispachers] = useState([])
@@ -35,7 +36,8 @@ function ProfilesList({ title, shadow, idProfileUser }) {
       <Grid container spacing={3} alignItems="center">
         <Grid item xs={6} md={6}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          {title}
+          {/* {title} */}
+          Title
         </MDTypography>
           </Grid>
           <Grid item xs={6} md={6}>
@@ -48,17 +50,22 @@ function ProfilesList({ title, shadow, idProfileUser }) {
       <MDBox p={2}>
         <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
           {/* {renderProfiles} */}
-          {driversDispachers.slice(0,5).map((row) => (
-            <MDBox key={row._id} component="li" display="flex" alignItems="center" py={1} mb={1}>
+          {/* {driversDispachers.slice(0,5).map((row) => ( */}
+          {/* key={row._id} */}
+            <MDBox  component="li" display="flex" alignItems="center" py={1} mb={1}>
               <MDBox mr={2}>
-                <MDAvatar src={`${url}${row.img}`} alt="something here" shadow="md" />
+                {/* <MDAvatar src={`${url}${row.img}`} alt="something here" shadow="md" /> */}
+                <MDAvatar src={Img} alt="something here" shadow="md" />
+
               </MDBox>
               <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
                 <MDTypography variant="button" fontWeight="medium">
-                {row.name}
+                {/* {row.name} */}
+                Name
                 </MDTypography>
                 <MDTypography variant="caption" color="text">
-                  {row.email}
+                  {/* {row.email} */}
+                  Email
                 </MDTypography>
               </MDBox>
               {/* <MDBox ml="auto">
@@ -70,7 +77,7 @@ function ProfilesList({ title, shadow, idProfileUser }) {
      </MDButton>
               </MDBox> */}
             </MDBox>
-          ))}
+          {/* ))} */}
 
         </MDBox>
       </MDBox>
