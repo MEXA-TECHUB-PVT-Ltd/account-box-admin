@@ -6,7 +6,8 @@ import SignUp from "layouts/authentication/sign-up";
 import Dispachers from "layouts/dispachers"
 import DispachersProfile from "layouts/dispachers/components/dispacherProfile"
 import VehicleProfile from "layouts/vehicles/components/vehicleProfile"
-import Hotels from "layouts/hotels"
+import Tycoon from "layouts/tycoons"
+import TycoonProfile from "layouts/tycoons/components/tycoonProfile"
 import HotelsProfile from "layouts/hotels/components/hotelProfile"
 import Guests from "layouts/guests"
 import Drivers from "layouts/drivers"
@@ -34,7 +35,7 @@ const routes = [
     type: "collapse",
     name: "Users",
     key: "users",
-    icon: <Icon fontSize="small">people_icon</Icon>,
+    icon: <Icon fontSize="small">admin_panel_settings_icon</Icon>,
     route: "/users",
     component: <Users />,
   },
@@ -46,24 +47,26 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Hotels",
-    key: "hotels",
-    icon: <Icon fontSize="small">hotel_icon</Icon>,
-    route: "/hotels",
-    component: <Hotels />,
-  },
-  {
-    key: "hotelsProfile",
-    icon: <Icon fontSize="small">hotel_icon</Icon>,
-    route: "/hotelsProfile",
-    component: <HotelsProfile />,
+    name: "Tycoons",
+    key: "tycoons",
+    icon: <Icon fontSize="small">supervised_user_circle_icon</Icon>,
+    route: "/tycoons",
+    component: <Tycoon />,
   },
   {
     type: "collapse",
-    name: "Drivers",
-    key: "drivers",
-    icon: <Icon fontSize="small">directions_car_icon</Icon>,
-    route: "/drivers",
+    name: "TycoonsProfile",
+    key: "tycoonProfile",
+    icon: <Icon fontSize="small">hotel_icon</Icon>,
+    route: "/tycoonProfile",
+    component: <TycoonProfile />,
+  },
+  {
+    type: "collapse",
+    name: "Subscription Plan",
+    key: "subscriptionPlan",
+    icon: <Icon fontSize="small">all_inbox_icon</Icon>,
+    route: "/subscriptionPlan",
     component: <Drivers />,
   },
   {
@@ -74,10 +77,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Dispachers",
-    key: "dispachers",
-    icon: <Icon fontSize="small">business_icon</Icon>,
-    route: "/dispachers",
+    name: "Subscriptions",
+    key: "subscriptions",
+    icon: <Icon fontSize="small">card_membership_icon</Icon>,
+    route: "/subscriptions",
     component: <Dispachers />,
   },
   {
@@ -89,10 +92,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Guests",
-    key: "guests",
-    icon: <Icon fontSize="small">groups_icon</Icon>,
-    route: "/guests",
+    name: "Earnings",
+    key: "earnings",
+    icon: <Icon fontSize="small">monetization_on_icon</Icon>,
+    route: "/earnings",
     component: <Guests />,
   },
   {
@@ -102,48 +105,48 @@ const routes = [
     route: "/guestsProfile",
     component: <GuestsProfile />,
   },
-  {
-    type: "collapse",
-    name: "Vehicles",
-    key: "vehicles",
-    icon: <Icon fontSize="small">local_taxi_icon</Icon>,
-    route: "/vehicles",
-    component: <Vehicles />,
-  },
-  {
-    key: "vehiclesProfile",
-    icon: <Icon fontSize="small">business_icon</Icon>,
-    route: "/vehiclesProfile",
-    component: <VehicleProfile />,
-  },
-  {
-    type: "collapse",
-    name: "Orders",
-    key: "orders",
-    icon: <Icon fontSize="small">people_icon</Icon>,
-    route: "/orders",
-    component: <Orders />,
-  },
-  {
-    key: "ordersProfile",
-    icon: <Icon fontSize="small">people_icon</Icon>,
-    route: "/ordersProfile",
-    component: <OrdersProfile />,
-  },
-  {
-    type: "collapse",
-    name: "Transactions",
-    key: "transactions",
-    icon: <Icon fontSize="small">receipt_icon</Icon>,
-    route: "/transactions",
-    component: <Transactions />,
-  },
-  {
-    key: "transactionsProfile",
-    icon: <Icon fontSize="small">people_icon</Icon>,
-    route: "/transactionsProfile",
-    component: <TransactionsProfile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Vehicles",
+  //   key: "vehicles",
+  //   icon: <Icon fontSize="small">local_taxi_icon</Icon>,
+  //   route: "/vehicles",
+  //   component: <Vehicles />,
+  // },
+  // {
+  //   key: "vehiclesProfile",
+  //   icon: <Icon fontSize="small">business_icon</Icon>,
+  //   route: "/vehiclesProfile",
+  //   component: <VehicleProfile />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Orders",
+  //   key: "orders",
+  //   icon: <Icon fontSize="small">people_icon</Icon>,
+  //   route: "/orders",
+  //   component: <Orders />,
+  // },
+  // {
+  //   key: "ordersProfile",
+  //   icon: <Icon fontSize="small">people_icon</Icon>,
+  //   route: "/ordersProfile",
+  //   component: <OrdersProfile />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Transactions",
+  //   key: "transactions",
+  //   icon: <Icon fontSize="small">receipt_icon</Icon>,
+  //   route: "/transactions",
+  //   component: <Transactions />,
+  // },
+  // {
+  //   key: "transactionsProfile",
+  //   icon: <Icon fontSize="small">people_icon</Icon>,
+  //   route: "/transactionsProfile",
+  //   component: <TransactionsProfile />,
+  // },
   {
     type: "collapse",
     name: "Settings",
