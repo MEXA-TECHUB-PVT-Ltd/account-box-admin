@@ -251,13 +251,28 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        axios.get(`${url}api/tycoon/get-all`)
-            .then((response) => {
-                console.log(response.data)
-                const users = response.data;
-                setUser(users);
-            })
-            .catch(error => console.error(`Error:${error}`));
+        const users= [
+            {
+                "_id": "636dfbbed1cb96d86e305177",
+                "email": "tycoon@gmail.com",
+                "password": "$2b$12$5VZiYFlS7GaA.A19tu9rK.tmP7nf2G5/J0UVTGEVy9l7ix5TXLxja",
+                "username": "Tycoon",
+                "profile_image": "/upload/image-16681465013762.PNG",
+                "status": "block",
+                "no_of_shops_created": "0",
+                "created_at": "27/10/2022",
+                "__v": 0,
+                "isLogin": true
+            }
+        ]
+        setUser(users);
+        // axios.get(`${url}api/tycoon/get-all`)
+        //     .then((response) => {
+        //         console.log(response.data)
+        //         const users = response.data;
+        //         setUser(users);
+        //     })
+        //     .catch(error => console.error(`Error:${error}`));
     }
     useEffect(() => {
         getAllData();

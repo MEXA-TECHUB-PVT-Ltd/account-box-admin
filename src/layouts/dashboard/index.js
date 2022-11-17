@@ -142,7 +142,7 @@ function Dashboard() {
                   description="Data Representation"
                   date="just updated"
                   chart={{
-                    labels: ["Hotel", "Drivers", "Dispachers","Guests"],
+                    labels: ["Shops", "Managers", "Products","Cashiers"],
                     datasets: { label: "Progress", data: [HotelData, Drivers, Dispachers,Guests] },
                   }}
                 />
@@ -156,7 +156,7 @@ function Dashboard() {
                   description="Data Representation"
                   date="just updated"
                   chart={{
-                    labels: ["Hotels", "Drivers", "Dispachers","Guests"],
+                    labels: ["Shops", "Managers", "Products","Cashiers"],
                     datasets: { label: "Progress", data: [HotelData, Drivers, Dispachers,Guests] },
                   }}
                 />

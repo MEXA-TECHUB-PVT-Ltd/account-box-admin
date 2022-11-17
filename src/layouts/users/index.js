@@ -147,13 +147,84 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        axios.get(`${url}api/admin/get-all`)
-            .then((response) => {
-                console.log(response.data)
-                const users = response.data;
-                setUser(users);
-            })
-            .catch(error => console.error(`Error:${error}`));
+        const users =[
+            {
+                "_id": "6375c57621874f362d77b2c7",
+                "username": "User",
+                "email": "User@gmail.com",
+                "password": "$2b$12$fvae.WGil/OBZ9EqeWjp/Oh4fZdSgF0EwxvyAvHHC8.FltA0EZDC.",
+                "img": "uploads\\\\1668591032792.png",
+                "privacy_policy": "asd",
+                "terms_and_conditions": "aasd",
+                "isLogin": false,
+                "__v": 0
+            },
+            {
+                "_id": "63748c843398895f4abdd1a6",
+                "username": "Testing",
+                "email": "Testing@gmail.com",
+                "password": "$2b$12$smMIjHym1vTH5LT.3mYy2e73iSyXlVOP5BUWGOv04qJUyZr6xnYmK",
+                "img": "uploads\\\\1668582358243.jpg",
+                "privacy_policy": "asdf",
+                "terms_and_conditions": "asdf",
+                "isLogin": false,
+                "__v": 0
+            },
+            {
+                "_id": "63736551f96438dc4c0990b1",
+                "username": "Rimsha Riaz",
+                "email": "rimsha1@gmail.com",
+                "password": "$2b$12$IW76/8fL0k/AKE5UUsOMOOUoZcvTqhttNG0ATDIIT3vrWeh.Qxyhq",
+                "img": "/upload/image-16681465013762.PNG",
+                "privacy_policy": "Privacy Policy",
+                "terms_and_conditions": "Terms And Conditions",
+                "isLogin": false,
+                "__v": 0
+            }
+        ]
+        setUser(users);
+        // axios.get(`${url}api/admin/get-all`)
+        //     .then((response) => {
+        //         console.log(response.data)
+        //         // const users = response.data;
+        //         const users =[
+        //             {
+        //                 "_id": "6375c57621874f362d77b2c7",
+        //                 "username": "User",
+        //                 "email": "User@gmail.com",
+        //                 "password": "$2b$12$fvae.WGil/OBZ9EqeWjp/Oh4fZdSgF0EwxvyAvHHC8.FltA0EZDC.",
+        //                 "img": "uploads\\\\1668591032792.png",
+        //                 "privacy_policy": "asd",
+        //                 "terms_and_conditions": "aasd",
+        //                 "isLogin": false,
+        //                 "__v": 0
+        //             },
+        //             {
+        //                 "_id": "63748c843398895f4abdd1a6",
+        //                 "username": "Testing",
+        //                 "email": "Testing@gmail.com",
+        //                 "password": "$2b$12$smMIjHym1vTH5LT.3mYy2e73iSyXlVOP5BUWGOv04qJUyZr6xnYmK",
+        //                 "img": "uploads\\\\1668582358243.jpg",
+        //                 "privacy_policy": "asdf",
+        //                 "terms_and_conditions": "asdf",
+        //                 "isLogin": false,
+        //                 "__v": 0
+        //             },
+        //             {
+        //                 "_id": "63736551f96438dc4c0990b1",
+        //                 "username": "Rimsha Riaz",
+        //                 "email": "rimsha1@gmail.com",
+        //                 "password": "$2b$12$IW76/8fL0k/AKE5UUsOMOOUoZcvTqhttNG0ATDIIT3vrWeh.Qxyhq",
+        //                 "img": "/upload/image-16681465013762.PNG",
+        //                 "privacy_policy": "Privacy Policy",
+        //                 "terms_and_conditions": "Terms And Conditions",
+        //                 "isLogin": false,
+        //                 "__v": 0
+        //             }
+        //         ]
+        //         setUser(users);
+        //     })
+        //     .catch(error => console.error(`Error:${error}`));
     }
     useEffect(() => {
         getAllData();
