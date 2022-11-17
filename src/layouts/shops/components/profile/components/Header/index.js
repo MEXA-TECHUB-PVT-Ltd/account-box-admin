@@ -18,12 +18,12 @@ function Header({ children, idProfileUser }) {
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
   const getAllData = () => {
-    axios.get(`${url}api/guest/specificGuest/${idProfileUser}`)
+    axios.get(`${url}api/hotel/specificHotel/${idProfileUser}`)
       .then((response) => {
         console.log('Data User Header')
         console.log(response.data[0])
-        setTypeId(response.data[0].email)
-        setUserName(response.data[0].name)
+        setTypeId(response.data[0].hotel_type_id.name)
+        setUserName(response.data[0].hotel_name)
         if (response.data[0].img === undefined) {
           setImageUser(backgroundImage)
         } else {
@@ -67,16 +67,19 @@ function Header({ children, idProfileUser }) {
       <Grid container spacing={3} alignItems="center">
         <Grid item>
           <MDAvatar
-            src={`${url}${imageUser}`}
+            // src={`${url}${imageUser}`}
+            src={`${backgroundImage}`}
             alt="profile-image" size="xl" shadow="sm" />
         </Grid>
         <Grid item>
           <MDBox height="100%" mt={0.5} lineHeight={1}>
             <MDTypography variant="h5" fontWeight="medium">
-              {userName}
+              {/* {userName} */}
+              Tycoon
             </MDTypography>
             <MDTypography variant="button" color="text" fontWeight="regular">
-              {TypeId}
+              {/* {TypeId} */}
+              tycoon@gmail.com
             </MDTypography>
           </MDBox>
         </Grid>

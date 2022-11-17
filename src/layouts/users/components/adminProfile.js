@@ -50,7 +50,7 @@ function VehicleProfile() {
                 </Grid>
                 :
                 <>
-                <Profile idProfile={state.idDispacher} />
+                <Profile idProfile="{state.idDispacher}" />
                 </>
             }
         </DashboardLayout>

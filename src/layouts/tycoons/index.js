@@ -44,10 +44,10 @@ function Users() {
     // get 
     const EditData = (idData) => {
         console.log(idData)
-        navigate('/hotelsProfile' ,
+        navigate('/tycoonProfile' ,
         {
             state: {
-                idDispacher: idData,
+                idDispacher: "idData",
             }
         }
         );
