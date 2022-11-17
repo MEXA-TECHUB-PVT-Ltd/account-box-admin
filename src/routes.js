@@ -22,6 +22,8 @@ import Transactions from "layouts/transactions"
 import UsersProfile from "layouts/users/components/adminProfile"
 import TransactionsProfile from "layouts/transactions/components/transactionProfile"
 import SettingsData from "layouts/settings"
+import SubscriptionData from "layouts/subscriptions"
+import SubscriptionDataProfile from "layouts/subscriptions/components/subscriptionProfile"
 const routes = [
   {
     type: "collapse",
@@ -81,7 +83,15 @@ const routes = [
     key: "subscriptions",
     icon: <Icon fontSize="small">card_membership_icon</Icon>,
     route: "/subscriptions",
-    component: <Dispachers />,
+    component: <SubscriptionData />,
+  },
+  {
+    type: "collapse",
+    name: "SubscriptionsProfile",
+    key: "subscriptionsProfile",
+    icon: <Icon fontSize="small">card_membership_icon</Icon>,
+    route: "/subscriptionsProfile",
+    component: <SubscriptionDataProfile />,
   },
   {
 
