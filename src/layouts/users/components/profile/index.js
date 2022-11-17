@@ -164,7 +164,7 @@ function Profile({ idProfile }) {
                   <InputLabel >Username</InputLabel>
                   <OutlinedInput
                     // type={values.showPassword ? 'text' : 'password'}
-                    value={Username}
+                    value="{Username}"
                     onChange={(e) => setUsername(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
@@ -184,7 +184,7 @@ function Profile({ idProfile }) {
                   <InputLabel >Email</InputLabel>
                   <OutlinedInput
                     // type={values.showPassword ? 'text' : 'password'}
-                    value={EmailAdmin}
+                    value="{EmailAdmin}"
                     onChange={(e) => setEmailAdmin(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
@@ -246,7 +246,7 @@ function Profile({ idProfile }) {
                     </Typography></Grid>
                   <Grid item xs={12} md={12}>
                     <TextareaAutosize
-                      value={Terms}
+                      value="{Terms}"
                       onChange={(e) => setTerms(e.target.value)}
                       aria-label="minimum height"
                       minRows={10}
@@ -261,7 +261,7 @@ function Profile({ idProfile }) {
                     </Typography></Grid>
                   <Grid item xs={12} md={12}>
                     <TextareaAutosize
-                      value={PrivacyPolicy}
+                      value="{PrivacyPolicy}"
                       onChange={(e) => setPrivacyPolicy(e.target.value)}
                       aria-label="minimum height"
                       minRows={10}

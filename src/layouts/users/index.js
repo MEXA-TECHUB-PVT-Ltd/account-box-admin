@@ -70,23 +70,25 @@ function Users() {
 
     // Delete 
     const deleteDataProduct = () => {
-        axios.delete(`${url}api/admin/deleteadmin/${productId}`
-            , { headers })
-            .then(res => {
+        setVisibleDelete(false)
+        setSuccessDelete(true)
+        // axios.delete(`${url}api/admin/deleteadmin/${productId}`
+        //     , { headers })
+        //     .then(res => {
 
-                console.log(res.data);
-                if (res.data.message === "Deleted Successfully") {
-                    setVisibleDelete(false)
-                    setSuccessDelete(true)
-                    getAllData();
-                    setLoadingLoader(false)
-                } else {
+        //         console.log(res.data);
+        //         if (res.data.message === "Deleted Successfully") {
+        //             setVisibleDelete(false)
+        //             setSuccessDelete(true)
+        //             getAllData();
+        //             setLoadingLoader(false)
+        //         } else {
 
-                }
+        //         }
 
-            }).catch(err => {
-                console.log(err)
-            })
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
     }
 
     const renderSuccessDelete = (
@@ -145,7 +147,7 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        axios.get(`${url}api/admin/alladmins`)
+        axios.get(`${url}api/admin/get-all`)
             .then((response) => {
                 console.log(response.data)
                 const users = response.data;
@@ -237,12 +239,12 @@ function Users() {
                                                             </Typography>
                                                         </Grid>
                                                         <Grid item xs={6} md={6}>
-                                                            <MDButton variant="gradient" color="error" size="small" onClick={deleteDataProduct} style={{ background: '#564cb9', color: 'white', borderRadius: '10px' }}>
+                                                            <MDButton variant="gradient" color="error" size="small" onClick={deleteDataProduct} style={{ background: '#F2C75B', color: 'white', borderRadius: '10px' }}>
                                                                 Yes
                                                             </MDButton>
                                                         </Grid>
                                                         <Grid item xs={6} md={6}>
-                                                            <Button autoFocus style={{ border: '1px solid #564cb9', color: '#564cb9', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
+                                                            <Button autoFocus style={{ border: '1px solid #F2C75B', color: '#F2C75B', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
                                                                 No
                                                             </Button>
                                                         </Grid>

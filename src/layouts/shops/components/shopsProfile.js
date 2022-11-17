@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import url from "url/url";
 import Grid from "@mui/material/Grid";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import MDSnackbar from "components/MDSnackbar";
 import { useLocation } from 'react-router-dom';
+import axios from "axios";
 import DotLoader from "react-spinners/DotLoader";
-import Profile from "layouts/vehicles/components/profile";
+import Profile from "layouts/shops/components/profile";
 
 const override = {
     display: ' block',
@@ -13,7 +16,7 @@ const override = {
     //   borderColor: 'red',
 }
 const color = "#F69920"
-function VehicleProfile() {
+function DispachersProfile() {
     const { state } = useLocation();
 
     // loader 
@@ -50,11 +53,13 @@ function VehicleProfile() {
                 </Grid>
                 :
                 <>
-                <Profile idProfile={state.idDispacher} />
+                {/* <Profile idProfile={state.idDispacher} /> */}
+                <Profile idProfile="{state.idDispacher} "/>
+
                 </>
             }
         </DashboardLayout>
     );
 }
 
-export default VehicleProfile;
+export default DispachersProfile;

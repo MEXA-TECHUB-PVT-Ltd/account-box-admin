@@ -20,6 +20,16 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import MDBadge from "components/MDBadge";
 import Box from '@mui/material/Box';
+import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import homeDecor1 from "assets/images/home-decor-1.jpg";
+import homeDecor2 from "assets/images/home-decor-2.jpg";
+import homeDecor3 from "assets/images/home-decor-3.jpg";
+import homeDecor4 from "assets/images/home-decor-4.jpeg";
+import team1 from "assets/images/team-1.jpg";
+import team2 from "assets/images/team-2.jpg";
+import team3 from "assets/images/team-3.jpg";
+import team4 from "assets/images/team-4.jpg";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -44,39 +54,13 @@ function Users() {
     // get 
     const EditData = (idData) => {
         console.log(idData)
-        navigate('/guestsProfile' ,
+        navigate('/shopsProfile' ,
         {
             state: {
-                idDispacher: idData,
+                idDispacher: "idData",
             }
         }
         );
-        // setLoadingLoader(true)
-
-        // setAddData(true)
-        // setTableData(false)
-        // setEditData(false)
-
-        // setTimeout(() => {
-        //     axios.get(`${url}api/user/specificUser/${idData}`)
-        //         .then((response) => {
-        //             console.log('History')
-        //             console.log(response.data[0])
-        //             // setUserEmail(response.data[0].userEmailAddress)
-        //             // setUserName(response.data[0].userName)
-        //             // setDateOfBirth(response.data[0].dateOfBirth)
-        //             // setGender(response.data[0].gender)
-        //             setLoadingLoader(false)
-        //             setAddData(true)
-        //             setTableData(false)
-        //             setEditData(false)
-
-
-        //         })
-        //         .catch(error => console.error(`Error:${error}`));
-        // }, 3000)
-
-
     }
     // Delete 
     const [visibleDelete, setVisibleDelete] = useState(false)
@@ -85,35 +69,39 @@ function Users() {
         setProductId(idData)
     }
     const BlockUser = (idData) => {
+        setSuccessSB(true)
+
         console.log(idData)
-        axios.put(`${url}api/guest/updateGuest`, {
-            _id: idData,
-            status: 'block',
-        }, { headers }).then(response => {
-            console.log(response);
-            setSuccessSB(true)
-            getAllData();
+        // axios.put(`${url}api/hotel/updateHotel`, {
+        //     _id: idData,
+        //     status: 'block',
+        // }, { headers }).then(response => {
+        //     console.log(response);
+        //     setSuccessSB(true)
+        //     getAllData();
 
 
-        })
-            .catch(err => {
-                console.log(err)
-            })
+        // })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
     }
     const CheckUser = (idData) => {
         console.log(idData)
-        axios.put(`${url}api/guest/updateGuest`, {
-            _id: idData,
-            status: 'unblock',
-        }, { headers }).then(response => {
-            console.log(response);
-            setSuccessSBV(true)
-            getAllData();
+        setSuccessSBV(true)
 
-        })
-            .catch(err => {
-                console.log(err)
-            })
+        // axios.put(`${url}api/hotel/updateHotel`, {
+        //     _id: idData,
+        //     status: 'unblock',
+        // }, { headers }).then(response => {
+        //     console.log(response);
+        //     setSuccessSBV(true)
+        //     getAllData();
+
+        // })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
     }
     const headers = {
         'Content-Type': 'application/json'
@@ -130,33 +118,33 @@ function Users() {
 
     // Delete 
     const deleteDataProduct = () => {
-        // setLoadingLoader(true)
-        // setTimeout(() => {
-        axios.delete(`${url}api/guest/deleteGuest/${productId}`
-            , { headers })
-            .then(res => {
+            setVisibleDelete(false)
 
-                console.log(res.data);
-                if (res.data.message === "Deleted Successfully") {
-                    setVisibleDelete(false)
-                    setSuccessDelete(true)
-                    getAllData();
-                    setLoadingLoader(false)
-                } else {
+            setSuccessDelete(true)
+        // axios.delete(`${url}api/hotel/deleteHotel/${productId}`
+        //     , { headers })
+        //     .then(res => {
 
-                }
+        //         console.log(res.data);
+        //         if (res.data.message === "Deleted Successfully") {
+        //             setVisibleDelete(false)
+        //             setSuccessDelete(true)
+        //             getAllData();
+        //             setLoadingLoader(false)
+        //         } else {
 
-            }).catch(err => {
-                console.log(err)
-            })
-        // }, 3000)
+        //         }
+
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
 
     }
 
     const renderSuccessDelete = (
         <MDSnackbar
             icon="notifications"
-            title="Guest Deleted Successfully"
+            title="Tycoon Deleted Successfully"
             content="This is a notification message"
             open={successDelete}
             onClose={closeSuccessDelete}
@@ -168,19 +156,19 @@ function Users() {
     const renderSuccessSb = (
         <MDSnackbar
             icon="notifications"
-            title="Guest Blocked Successfully"
+            title="Tycoon Blocked Successfully"
             content="This is a notification message"
             open={successSB}
             onClose={closeSuccessSB}
             close={closeSuccessSB}
-            color="error"
+            color="success"
             bgWhite
         />
     );
     const renderSuccessSbVerify = (
         <MDSnackbar
             icon="notifications"
-            title="Guest Verified Successfully"
+            title="Tycoon Verified Successfully"
             content="This is a notification message"
             open={successSBV}
             onClose={closeSuccessSBV}
@@ -194,24 +182,28 @@ function Users() {
 
     let columns = [
         {
-            title: 'Name', field: 'email', width: '20%', render: (row) =>
+            title: 'Name', field: 'username', width: '20%', render: (row) =>
               <>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4}>
-                    <Avatar src={`${url}${row.img}`} />
+                    <Avatar src={`${url}${row.profile_image}`} />
                   </Grid>
                   <Grid item xs={12} md={8} style={{ marginTop: '10px' }}>
-                  {row.name===undefined?<span>Null</span>:<span>{row.name}</span>}
+                  {row.username===undefined?<span>Null</span>:<span>{row.username}</span>}
                   </Grid>
                 </Grid>
               </>
           },
         
 
-        { title: 'phone No', field: 'phoneno', width: '10%' , render: (row) =>
+        { title: 'Email', field: 'email', width: '10%' , render: (row) =>
         <>
-          {row.phoneno===undefined?<span>Null</span>:<span>{row.phoneno}</span>}
+          {row.email===undefined?<span>Null</span>:<span>{row.email}</span>}
         </> },
+         { title: 'Shops', field: 'no_of_shops_created', width: '10%' , render: (row) =>
+         <>
+           {row.no_of_shops_created===undefined?<span>Null</span>:<span>{row.no_of_shops_created}</span>}
+         </> },
         { title: 'Created At', field: 'created_at', width: '10%', render: (row) =>
         <>
           {row.created_at===undefined?<span>Null</span>:<span>{row.created_at}</span>}
@@ -233,7 +225,7 @@ function Users() {
                 <>
 
                     {row.status==='unblock' ?
-                        <Tooltip title="Block User">
+                        <Tooltip title="Block Hotel">
 
                             <Icon fontSize="small" style={{ cursor: 'pointer', color: '#fea21e', marginRight: '5px' }} onClick={() => {
                                 BlockUser(row._id)
@@ -241,7 +233,7 @@ function Users() {
                         </Tooltip>
 
                         :
-                        <Tooltip title="Verify User">
+                        <Tooltip title="Verify Hotel">
 
                             <Icon fontSize="small" style={{ cursor: 'pointer', color: '#5db461', marginRight: '5px' }} onClick={() => {
                                 CheckUser(row._id)
@@ -269,7 +261,7 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        axios.get(`${url}api/guest/allGuests`)
+        axios.get(`${url}api/tycoon/get-all`)
             .then((response) => {
                 console.log(response.data)
                 const users = response.data;
@@ -295,6 +287,16 @@ function Users() {
             console.log(items)
         }
     }, []);
+    // const EditData = (idData) => {
+    //     console.log(idData)
+    //     navigate('/subscriptionsProfile' ,
+    //     {
+    //         state: {
+    //             idDispacher: "idData",
+    //         }
+    //     }
+    //     );
+    // }
     return (
         <DashboardLayout>
             <DashboardNavbar data={items} />
@@ -324,12 +326,120 @@ function Users() {
                                         >
 
                                             <MDTypography variant="h6" fontWeight="medium" color="white">
-                                                All Data
+                                                All Shops
                                             </MDTypography>
                                         </MDBox>
 
                                         <MDBox >
-                                            <MaterialTable
+                                        <MDBox p={2}>
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={6} xl={3} style={{cursor:"pointer"}}
+              onClick={() => {
+                EditData("row._id")
+            }}>
+              <DefaultProjectCard 
+              
+                image={homeDecor1}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor2}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor3}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor4}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor4}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+          </Grid>
+        </MDBox>
+                                            {/* <MaterialTable
                                                 title=""
                                                 columns={columns}
                                                 data={user}
@@ -344,7 +454,7 @@ function Users() {
                                                     sorting: true,
                                                     actionsColumnIndex: -1
                                                 }}
-                                            />
+                                            /> */}
                                             <div>
                                                 <Modal
                                                     open={visibleDelete}
@@ -356,19 +466,19 @@ function Users() {
                                                         <Grid container spacing={2} align="center">
                                                             <Grid item xs={12} md={12}>
                                                                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                                                                    Are you sure you want to delete<br/> this Guest?
+                                                                    Are you sure you want to delete<br/> this Tycoon?
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
                                                                 {/* <Button autoFocus onClick={deleteDataProduct} style={{ background: 'linear-gradient(195deg, #5fb663, #3ccf42)', color: 'white', borderRadius: '10px' }}>
                                                                 Yes
                                                             </Button> */}
-                                                                <MDButton variant="gradient" color="error" size="small" onClick={deleteDataProduct} style={{ background: '#564cb9', color: 'white', borderRadius: '10px' }}>
+                                                                <MDButton variant="gradient" color="error" size="small" onClick={deleteDataProduct} style={{ background: '#F2C75B', color: 'white', borderRadius: '10px' }}>
                                                                     Yes
                                                                 </MDButton>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Button autoFocus style={{ border: '1px solid #564cb9', color: '#564cb9', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
+                                                                <Button autoFocus style={{ border: '1px solid #F2C75B', color: '#F2C75B', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
                                                                     No
                                                                 </Button>
                                                             </Grid>

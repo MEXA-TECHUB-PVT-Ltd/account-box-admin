@@ -23,13 +23,17 @@ import Box from '@mui/material/Box';
 import './stylesheet.css'
 import PropTypes from 'prop-types';
 import MDBadge from "components/MDBadge";
-import DefaultProjectCard from "layouts/tycoons/components/profile/components/DefaultProjectCard";
+import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import homeDecor1 from "assets/images/home-decor-1.jpg";
+import homeDecor2 from "assets/images/home-decor-2.jpg";
+import homeDecor3 from "assets/images/home-decor-3.jpg";
+import homeDecor4 from "assets/images/home-decor-4.jpeg";
 
 
 function TabPanel(props) {
@@ -182,10 +186,10 @@ function Profile({ idProfile }) {
   const closeSuccessDelete = () => setSuccessDelete(false);
   const EditData = (idData) => {
     console.log(idData)
-    navigate('/ordersProfile',
+    navigate('/shopsProfile',
       {
         state: {
-          idDispacher: idData,
+          idDispacher: "idData",
         }
       }
     );
@@ -357,138 +361,112 @@ function Profile({ idProfile }) {
                     </Grid>
                   ))}
                 </Grid> */}
-                <MDBox pt={3}>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 700, opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }}>Shop Name</TableCell>
-                        <TableCell style={{ fontWeight: 700, opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }} align="center">Manger Name</TableCell>
-                        {/* <TableCell style={{ fontWeight: 700, opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }} align="center">flight Date</TableCell>
-                        <TableCell style={{ fontWeight: 700, opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }} align="center">flight Time</TableCell> */}
-                        <TableCell style={{ fontWeight: 700, opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }} align="center">Created At</TableCell>
-                        {/* <TableCell style={{ fontWeight: 700, opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }} align="center">Actions</TableCell> */}
-
-                      </TableRow>
-                      <TableBody>
-                      <TableRow>
-                        <TableCell style={{ fontWeight: 700,opacity: 0.7,color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }}>mTechub1</TableCell>
-                        <TableCell style={{ fontWeight: 700,opacity: 0.7, color: 'rgba(0, 0, 0, 0.87)', fontSize: '14px' }} align="center">Mtechub Pvt Manager</TableCell>
-                        {/* <TableCell style={{ fontWeight: 700,  fontSize: '14px' }} align="center">flight Date</TableCell>
-                        <TableCell style={{ fontWeight: 700,   fontSize: '14px' }} align="center">flight Time</TableCell> */}
-                        <TableCell style={{ fontWeight: 700,opacity: 0.7,color: 'rgba(0, 0, 0, 0.87)',  fontSize: '14px' }} align="center">27/10/2022</TableCell>
-                        {/* <TableCell style={{ fontWeight: 700,  fontSize: '14px' }} align="center">Actions</TableCell> */}
-
-                      </TableRow>
-                      </TableBody>
-                      {/* <TableBody>
-                        {DispacherDriverOrders.map((row) => (
-                          <TableRow
-                            key={row._id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                          >
-
-                            <TableCell style={{ fontSize: '14px' }}>
-                              <>
-                                {row.pickup_location === undefined ? <span>Null</span> : <span>{row.pickup_location.slice(0, 10)}.....</span>}
-                              </>
-                            </TableCell>
-
-                            <TableCell align="right" style={{ fontSize: '14px' }}>
-                              <>
-                                {row.dropoff_location === undefined ? <span>Null</span> : <span>{row.dropoff_location.slice(0, 10)}.....</span>}
-                              </>
-                            </TableCell>
-                            <TableCell align="right" style={{ fontSize: '14px' }}>
-                              <>
-                                {row.flight_date === undefined ? <span>Null</span> : <span>{row.flight_date}</span>}
-                              </>
-                            </TableCell>
-                            <TableCell align="right" style={{ fontSize: '14px' }}>
-                              <>
-                                {row.flight_time === undefined ? <span>Null</span> : <span>{row.flight_time}</span>}
-                              </>
-                            </TableCell>
-                            <TableCell align="right" style={{ fontSize: '14px' }}>
-                              <div>
-                                {row.status === 'ongoing' ?
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={12} md={1}>
-                                      <Icon fontSize="small" color="primary">loop_icon</Icon>
-
-                                    </Grid>
-                                    <Grid item xs={12} md={10}>
-                                      <MDBadge badgeContent="Ongoing" color="primary" variant="gradient" size="sm" />
-
-                                    </Grid>
-                                  </Grid>
-                                  :
-                                  null
-                                }
-                                {row.status === 'cancel' ?
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={12} md={1}>
-                                      <Icon fontSize="small" color="error">cancel_icon</Icon>
-
-                                    </Grid>
-                                    <Grid item xs={12} md={10}>
-                                      <MDBadge badgeContent="Canceled" color="error" variant="gradient" size="sm" />
-
-                                    </Grid>
-                                  </Grid>
-                                  :
-                                  null
-                                }
-                                {row.status === 'schedule' ?
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={12} md={1}>
-                                      <Icon fontSize="small" color="warning">schedule_icon</Icon>
-
-                                    </Grid>
-                                    <Grid item xs={12} md={10}>
-                                      <MDBadge badgeContent="Scheduled" color="warning" variant="gradient" size="sm" />
-
-                                    </Grid>
-                                  </Grid>
-                                  :
-                                  null
-                                }
-                                {row.status === 'completed' ?
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={12} md={1}>
-                                      <Icon fontSize="small" color="success">check_circle_outline_icon</Icon>
-
-                                    </Grid>
-                                    <Grid item xs={12} md={10}>
-                                      <MDBadge badgeContent="Completed" color="success" variant="gradient" size="sm" />
-
-                                    </Grid>
-                                  </Grid>
-                                  :
-                                  null
-                                }
-
-                              </div>
-                            </TableCell>
-
-                            <TableCell align="right" style={{ fontSize: '14px' }}>
-                              <>
-                                <Tooltip title="View">
-
-                                  <Icon fontSize="small" style={{ cursor: 'pointer', color: 'grey', marginRight: '5px' }} onClick={() => {
-                                    EditData(row._id)
-                                  }}>visibility_icon</Icon>
-                                </Tooltip>
-
-
-                              </>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody> */}
-                    </Table>
-                  </TableContainer>
-
-                </MDBox>
+                <Grid container spacing={6}>
+            <Grid item xs={12} md={6} xl={3} style={{cursor:"pointer"}}
+              onClick={() => {
+                EditData("row._id")
+            }}>
+              <DefaultProjectCard 
+              
+                image={homeDecor1}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor2}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor3}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor4}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+            <DefaultProjectCard
+                image={homeDecor4}
+                label="Shop Name"
+                title="modern"
+                description="18/11/2022"
+                action={{
+                  type: "internal",
+                  route: "/pages/profile/profile-overview",
+                  color: "info",
+                  label: "view project",
+                }}
+                // authors={[
+                //   { image: team1, name: "Elena Morison" },
+                //   { image: team2, name: "Ryan Milly" },
+                //   { image: team3, name: "Nick Daniel" },
+                //   { image: team4, name: "Peterson" },
+                // ]}
+              />
+            </Grid>
+          </Grid>
               </TabPanel>
               <TabPanel value={tabValue} index={2}>
                 <MDBox pt={3}>
