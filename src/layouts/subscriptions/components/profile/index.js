@@ -7,7 +7,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import MDBox from "components/MDBox";
 import Avatar from '@mui/material/Avatar';
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import Header from "layouts/tycoons/components/profile/components/Header";
+import Header from "layouts/subscriptions/components/profile/components/Header";
 import ProfilesList from "examples/Lists/GuestsList";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -23,7 +23,7 @@ import Box from '@mui/material/Box';
 import './stylesheet.css'
 import PropTypes from 'prop-types';
 import MDBadge from "components/MDBadge";
-import DefaultProjectCard from "layouts/tycoons/components/profile/components/DefaultProjectCard";
+import DefaultProjectCard from "layouts/subscriptions/components/profile/components/DefaultProjectCard";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -210,10 +210,10 @@ function Profile({ idProfile }) {
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={12} sx={{ ml: "auto" }}>
-              <AppBar position="static">
+              {/* <AppBar position="static">
                 <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
                   <Tab
-                    label="Profile"
+                    label="Details"
                     icon={
                       <Icon fontSize="small" sx={{ mt: -0.25 }}>
                         account_box_icon
@@ -253,8 +253,8 @@ function Profile({ idProfile }) {
                     }
                   />
                 </Tabs>
-              </AppBar>
-              <TabPanel value={tabValue} index={0}>
+              </AppBar> */}
+              {/* <TabPanel value={tabValue} index={0}> */}
                 <Grid container spacing={1}>
                   <Grid item xs={12} md={4} sx={{ display: "flex" }}>
                     <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
@@ -339,11 +339,43 @@ function Profile({ idProfile }) {
                     <Divider orientation="vertical" sx={{ mx: 0 }} />
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <ProfilesList title="Shops" idProfileUser={idProfile}
-                      shadow={true} />
+                  <ProfileInfoCard
+                      title="Other Details"
+                      info={{
+                        // bankName: bank_name,
+                        // accountHolderName: account_holder_name,
+                        // accountNumber: account_number,
+                        // iban: iban,
+                        swiftCode: "swift_code",
+                        expiryDate: "expiry_date",
+                        name: "XYZ",
+                        noOfShops: "XYZ",
+                        pricePerMonth: "XYZ",
+                      }}
+                      social={[
+                        {
+                          link: "https://www.facebook.com/CreativeTim/",
+                          icon: <FacebookIcon />,
+                          color: "facebook",
+                        },
+                        {
+                          link: "https://twitter.com/creativetim",
+                          icon: <TwitterIcon />,
+                          color: "twitter",
+                        },
+                        {
+                          link: "https://www.instagram.com/creativetimofficial/",
+                          icon: <InstagramIcon />,
+                          color: "instagram",
+                        },
+                      ]}
+                      action={{ route: "", tooltip: "Edit Profile" }}
+                      shadow={false}
+                    />
+                    <Divider orientation="vertical" sx={{ mx: 0 }} />
                   </Grid>
                 </Grid>
-              </TabPanel>
+              {/* </TabPanel> */}
               <TabPanel value={tabValue} index={1}>
                 {/* <Grid container spacing={6}>
                   {DispacherDriver.map((row) => (
