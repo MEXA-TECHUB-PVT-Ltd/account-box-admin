@@ -24,6 +24,7 @@ import TransactionsProfile from "layouts/transactions/components/transactionProf
 import SettingsData from "layouts/settings"
 import SubscriptionData from "layouts/subscriptions"
 import SubscriptionDataProfile from "layouts/subscriptions/components/subscriptionProfile"
+import SubscriptionPlan from "layouts/subscriptionsPlan"
 const routes = [
   {
     type: "collapse",
@@ -69,7 +70,7 @@ const routes = [
     key: "subscriptionPlan",
     icon: <Icon fontSize="small">all_inbox_icon</Icon>,
     route: "/subscriptionPlan",
-    component: <Drivers />,
+    component: <SubscriptionPlan />,
   },
   {
     key: "driversProfile",
