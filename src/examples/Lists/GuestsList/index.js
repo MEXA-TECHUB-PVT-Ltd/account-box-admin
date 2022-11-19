@@ -9,8 +9,6 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
-import Img from "assets/images/logo2.jpg"
 
 function ProfilesList({ title, shadow, idProfileUser }) {
   const [driversDispachers, setDriversDispachers] = useState([])
@@ -49,13 +47,10 @@ function ProfilesList({ title, shadow, idProfileUser }) {
       </MDBox>
       <MDBox p={2}>
         <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-          {/* {renderProfiles} */}
           {driversDispachers.slice(0,5).map((row) => (
-          //  key={row._id} 
             <MDBox  component="li" display="flex" alignItems="center" py={1} mb={1}>
               <MDBox mr={2}>
                 <MDAvatar src={`${url}${row.img}`} alt="something here" shadow="md" />
-                {/* <MDAvatar src={Img} alt="something here" shadow="md" /> */}
 
               </MDBox>
               <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
@@ -66,14 +61,7 @@ function ProfilesList({ title, shadow, idProfileUser }) {
                   {row.created_at}
                 </MDTypography>
               </MDBox>
-              {/* <MDBox ml="auto">
-          
-     <MDButton 
-     // to={action.route}
-      variant="text" color="info">
-       View
-     </MDButton>
-              </MDBox> */}
+              
             </MDBox>
          ))}
 

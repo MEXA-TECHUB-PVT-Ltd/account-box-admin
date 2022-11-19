@@ -18,7 +18,6 @@ import DotLoader from "react-spinners/DotLoader";
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import MDBadge from "components/MDBadge";
 import Box from '@mui/material/Box';
 const style = {
     position: 'absolute',
@@ -57,41 +56,6 @@ function Users() {
     const deleteData = (idData) => {
         setVisibleDelete(true)
         setProductId(idData)
-    }
-    const BlockUser = (idData) => {
-        setSuccessSB(true)
-
-        console.log(idData)
-        // axios.put(`${url}api/hotel/updateHotel`, {
-        //     _id: idData,
-        //     status: 'block',
-        // }, { headers }).then(response => {
-        //     console.log(response);
-        //     setSuccessSB(true)
-        //     getAllData();
-
-
-        // })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-    }
-    const CheckUser = (idData) => {
-        console.log(idData)
-        setSuccessSBV(true)
-
-        // axios.put(`${url}api/hotel/updateHotel`, {
-        //     _id: idData,
-        //     status: 'unblock',
-        // }, { headers }).then(response => {
-        //     console.log(response);
-        //     setSuccessSBV(true)
-        //     getAllData();
-
-        // })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
     }
     const headers = {
         'Content-Type': 'application/json'

@@ -32,54 +32,79 @@ function Dashboard() {
       // navigate('/dashboard')
     }
   }, []);
-  const [Guests, setGuests] = useState('');
-  const [Dispachers, setDispachers] = useState('');
-  const [HotelData, setHotelData] = useState('');
-  const [Drivers, setDrivers] = useState('');
+  const [ManagersData, setManagersData] = useState('');
+  const [ProductsData, setProductsData] = useState('');
+  const [CashiersData, setCashiersData] = useState('');
+
+
+  const [TycoonAll, setTycoonAll] = useState('');
+  const [SubscriptionsData, setSubscriptionsData] = useState('');
+  const [ShopsData, setShopsData] = useState('');
   const getAllData = () => {
-    axios.get(`${url}api/dispacher/allDispachers`)
+    axios.get(`${url}api/tycoon/get-all`)
       .then((response) => {
         console.log(response.data.length)
-        const Dispachers = response.data.length;
-        // console.log(Dispachers)
-        setDispachers(Dispachers);
+        const TycoonAll = response.data.length;
+        // console.log(TycoonAll)
+        setTycoonAll(TycoonAll);
       })
       .catch(error => console.error(`Error:${error}`));
   }
   
-  const getAllHotelData = () => {
-    axios.get(`${url}api/hotel/allHotels`)
+  const getAllSubscriptionsData = () => {
+    axios.get(`${url}api/subscription_history/get-all`)
       .then((response) => {
-        const Dispachers = response.data.length;
-        console.log(Dispachers)
-        setHotelData(Dispachers);
+        const TycoonAll = response.data.length;
+        console.log(TycoonAll)
+        setSubscriptionsData(TycoonAll);
       })
       .catch(error => console.error(`Error:${error}`));
   }
-  const getAllDrivers = () => {
-    axios.get(`${url}api/driver/allDrivers`)
+  const getAllShopsData = () => {
+    axios.get(`${url}api/shop/get-all`)
       .then((response) => {
-        const Dispachers = response.data.length;
-        console.log(Dispachers)
-        setDrivers(Dispachers);
+        const TycoonAll = response.data.length;
+        console.log(TycoonAll)
+        setShopsData(TycoonAll);
       })
       .catch(error => console.error(`Error:${error}`));
   }
   const getAllGuest = () => {
-    axios.get(`${url}api/driver/allDrivers`)
+    axios.get(`${url}api/managers/get-all`)
       .then((response) => {
-        const Dispachers = response.data.length;
-        console.log(Dispachers)
-        setGuests(Dispachers);
+        const TycoonAll = response.data.length;
+        console.log(TycoonAll)
+        setManagersData(TycoonAll);
+      })
+      .catch(error => console.error(`Error:${error}`));
+  }
+
+  const getAllProducts = () => {
+    axios.get(`${url}api/shopProducts/get-all`)
+      .then((response) => {
+        const TycoonAll = response.data.length;
+        console.log(TycoonAll)
+        setProductsData(TycoonAll);
+      })
+      .catch(error => console.error(`Error:${error}`));
+  }
+  const getAllCashiers = () => {
+    axios.get(`${url}api/shopCashiers/get-all`)
+      .then((response) => {
+        const TycoonAll = response.data.length;
+        console.log(TycoonAll)
+        setCashiersData(TycoonAll);
       })
       .catch(error => console.error(`Error:${error}`));
   }
 
   useEffect(() => {
     getAllData();
-    getAllHotelData();
-    getAllDrivers();
+    getAllSubscriptionsData();
+    getAllShopsData();
+    getAllProducts();
     getAllGuest();
+    getAllCashiers();
  
   }, []);
   return (
@@ -93,7 +118,7 @@ function Dashboard() {
                 color="dark"
                 icon="business_icon"
                 title="Total Tycoon"
-                count={Dispachers}
+                count={TycoonAll}
                
               />
             </MDBox>
@@ -105,7 +130,7 @@ function Dashboard() {
                 color="error"
                 icon="hotel_icon"
                 title="Total Subscriptions"
-                count={HotelData}
+                count={SubscriptionsData}
                
               />
             </MDBox>
@@ -116,7 +141,7 @@ function Dashboard() {
                 color="warning"
                 icon="business_icon"
                 title="Total Shops"
-                count={Drivers}
+                count={ShopsData}
                
               />
             </MDBox>
@@ -127,7 +152,7 @@ function Dashboard() {
                 color="secondary"
                 icon="person_icon"
                 title="Total Managers"
-                count={Guests}
+                count={ManagersData}
               />
             </MDBox>
           </Grid>
@@ -142,8 +167,8 @@ function Dashboard() {
                   description="Data Representation"
                   date="just updated"
                   chart={{
-                    labels: ["Shops", "Managers", "Products","Cashiers"],
-                    datasets: { label: "Progress", data: [HotelData, Drivers, Dispachers,Guests] },
+                    labels: ["Subscriptions", "Shops", "Tycoons","Managers","Products","Cashiers"],
+                    datasets: { label: "Progress", data: [SubscriptionsData, ShopsData, TycoonAll,ManagersData,ProductsData,CashiersData] },
                   }}
                 />
               </MDBox>
@@ -156,8 +181,8 @@ function Dashboard() {
                   description="Data Representation"
                   date="just updated"
                   chart={{
-                    labels: ["Shops", "Managers", "Products","Cashiers"],
-                    datasets: { label: "Progress", data: [HotelData, Drivers, Dispachers,Guests] },
+                    labels: ["Subscriptions", "Shops", "Tycoons","Managers","Products","Cashiers"],
+                    datasets: { label: "Progress", data: [SubscriptionsData, ShopsData, TycoonAll,ManagersData,ProductsData,CashiersData] },
                   }}
                 />
               </MDBox>

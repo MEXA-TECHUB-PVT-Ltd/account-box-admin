@@ -5,13 +5,11 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MDBox from "components/MDBox";
-import Avatar from '@mui/material/Avatar';
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import Header from "layouts/tycoons/components/profile/components/Header";
 import ProfilesList from "examples/Lists/GuestsList";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
-import Tooltip from '@mui/material/Tooltip';
 import breakpoints from "assets/theme/base/breakpoints";
 import Tab from "@mui/material/Tab";
 import { useNavigate } from 'react-router-dom';
@@ -22,19 +20,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import './stylesheet.css'
 import PropTypes from 'prop-types';
-import MDBadge from "components/MDBadge";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import homeDecor1 from "assets/images/home-decor-1.jpg";
-import homeDecor2 from "assets/images/home-decor-2.jpg";
-import homeDecor3 from "assets/images/home-decor-3.jpg";
-import homeDecor4 from "assets/images/home-decor-4.jpeg";
-
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,40 +47,23 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+
 function Profile({ idProfile }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
   const [UserName, setUserName] = useState('');
   const [EmailTycoon, setEmailTycoon] = useState('');
-
   const [TotalShops, setTotalShops] = useState('');
   const [SubscriptionName, setSubscriptionName] = useState('');
   const [PricePerMonth, setPricePerMonth] = useState('');
   const [status, setstatus] = useState('');
   const [DispacherDriver, setDispacherDriver] = useState([]);
-  const [DispacherDriverOrders, setDispacherDriverOrders] = useState([]);
 
   const [noOfShops, setnoOfShops] = useState('');
   const [createdAt, setcreatedAt] = useState('');
-  const [zip_code, setzip_code] = useState('');
-  const [phoneNo, setphoneNo] = useState('');
-  const [streetAddress, setstreetAddress] = useState('');
-  const [account_holder_name, setaccount_holder_name] = useState('');
-  const [account_number, setaccount_number] = useState('');
-  const [bank_name, setbank_name] = useState('');
   const [expiry_date, setexpiry_date] = useState('');
-  const [iban, setiban] = useState('');
   const [start_date, setstart_date] = useState('');
-  const headers = {
-    'Content-Type': 'application/json'
-  }
   const getAllDataSubscription = () => {
     axios.get(`${url}api/subscription_history/get-subscription-history-by-TycoonId/${idProfile}`)
       .then((response) => {
@@ -148,31 +117,10 @@ function Profile({ idProfile }) {
       })
       .catch(error => console.error(`Error:${error}`));
   }
-  const getAllDataOrders = () => {
-    axios.get(`${url}api/Order/hotelOrders/${idProfile}`)
-      .then((response) => {
-        console.log('Data Guests Orders')
-        console.log(response.data)
-        setDispacherDriverOrders(response.data)
-      })
-      .catch(error => console.error(`Error:${error}`));
-  }
-  const [DriverTransaction, setDriverTransaction] = useState([]);
-
-  const getAllDataTransaction = () => {
-    axios.get(`${url}api/invoice/getHotelTransactionCompleted/${idProfile}`)
-      .then((response) => {
-        console.log('Data Hotel Transaction')
-        console.log(response.data)
-        setDriverTransaction(response.data)
-      })
-      .catch(error => console.error(`Error:${error}`));
-  }
+  
   useEffect(() => {
     getAllData();
     getAllDataPosts();
-    getAllDataOrders();
-    getAllDataTransaction();
     getAllDataSubscription();
     console.log("props.idProfile")
     console.log(idProfile)
@@ -190,10 +138,6 @@ function Profile({ idProfile }) {
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
   const navigate = useNavigate();
-  const [productId, setProductId] = useState('');
-
-  const [successDelete, setSuccessDelete] = useState(false);
-  const closeSuccessDelete = () => setSuccessDelete(false);
   const EditData = (idData) => {
     console.log(idData)
     navigate('/shopsProfile',
@@ -205,18 +149,7 @@ function Profile({ idProfile }) {
     );
 
   }
-  // Delete 
-  const EditDataTrans = (idData) => {
-    console.log(idData)
-    navigate('/transactionsProfile',
-      {
-        state: {
-          idDispacher: idData,
-        }
-      }
-    );
 
-  }
   return (
     <>
       <MDBox mb={2} />
@@ -242,30 +175,7 @@ function Profile({ idProfile }) {
                       </Icon>
                     }
                   />
-                  {/* <Tab
-                    label="Managers"
-                    icon={
-                      <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                        person_icon
-                      </Icon>
-                    }
-                  />
-                  <Tab
-                    label="Cashiers"
-                    icon={
-                      <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                        credit_card_icon
-                      </Icon>
-                    }
-                  />
-                  <Tab
-                    label="Debts"
-                    icon={
-                      <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                        credit_score_icon
-                      </Icon>
-                    }
-                  /> */}
+                 
                 </Tabs>
               </AppBar>
               <TabPanel value={tabValue} index={0}>

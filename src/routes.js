@@ -90,14 +90,14 @@ const routes = [
     route: "/subscriptionsProfile",
     component: <SubscriptionDataProfile />,
   },
-  {
-    type: "collapse",
-    name: "Earnings",
-    key: "earnings",
-    icon: <Icon fontSize="small">monetization_on_icon</Icon>,
-    route: "/earnings",
-    component: <Dashboard />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Earnings",
+  //   key: "earnings",
+  //   icon: <Icon fontSize="small">monetization_on_icon</Icon>,
+  //   route: "/earnings",
+  //   component: <Dashboard />,
+  // },
   {
     type: "collapse",
     name: "Settings",

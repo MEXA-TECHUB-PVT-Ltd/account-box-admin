@@ -5,7 +5,6 @@ import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDSnackbar from "components/MDSnackbar";
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import MDButton from "components/MDButton";
 import DotLoader from "react-spinners/DotLoader";
@@ -37,25 +36,7 @@ const override = {
 }
 const color = "#F69920"
 function Users() {
-    const navigate = useNavigate();
-    const [productId, setProductId] = useState('');
     // get 
-    const EditData = (idData) => {
-        console.log(idData)
-        navigate('/hotelsProfile',
-            {
-                state: {
-                    idDispacher: idData,
-                }
-            }
-        );
-    }
-    // Delete 
-    const [visibleDelete, setVisibleDelete] = useState(false)
-    const deleteData = (idData) => {
-        setVisibleDelete(true)
-        setProductId(idData)
-    }
     const headers = {
         'Content-Type': 'application/json'
     }
@@ -63,49 +44,9 @@ function Users() {
     const closeSuccessSB = () => setSuccessSB(false);
     const closeSuccessSBV = () => setSuccessSBV(false);
 
-    const closeSuccessDelete = () => setSuccessDelete(false);
     const [successSB, setSuccessSB] = useState(false);
     const [successSBV, setSuccessSBV] = useState(false);
 
-    const [successDelete, setSuccessDelete] = useState(false);
-
-    // Delete 
-    const deleteDataProduct = () => {
-        setVisibleDelete(false)
-
-        setSuccessDelete(true)
-        // axios.delete(`${url}api/hotel/deleteHotel/${productId}`
-        //     , { headers })
-        //     .then(res => {
-
-        //         console.log(res.data);
-        //         if (res.data.message === "Deleted Successfully") {
-        //             setVisibleDelete(false)
-        //             setSuccessDelete(true)
-        //             getAllData();
-        //             setLoadingLoader(false)
-        //         } else {
-
-        //         }
-
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
-
-    }
-
-    const renderSuccessDelete = (
-        <MDSnackbar
-            icon="notifications"
-            title="Tycoon Deleted Successfully"
-            content="This is a notification message"
-            open={successDelete}
-            onClose={closeSuccessDelete}
-            close={closeSuccessDelete}
-            color="success"
-            bgWhite
-        />
-    );
     const renderSuccessSb = (
         <MDSnackbar
             icon="notifications"

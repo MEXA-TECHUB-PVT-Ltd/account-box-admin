@@ -15,11 +15,9 @@ import Icon from "@mui/material/Icon";
 import MaterialTable from 'material-table';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-
 import DotLoader from "react-spinners/DotLoader";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import MDBadge from "components/MDBadge";
 import Box from '@mui/material/Box';
 
 const style = {

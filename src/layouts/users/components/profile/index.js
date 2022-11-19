@@ -45,12 +45,6 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 function Profile({ idProfile }) {
   const [Username, setUsername] = useState('');
   const [EmailAdmin, setEmailAdmin] = useState('');
