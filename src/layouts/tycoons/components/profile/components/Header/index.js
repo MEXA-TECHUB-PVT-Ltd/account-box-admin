@@ -11,23 +11,21 @@ import breakpoints from "assets/theme/base/breakpoints";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 // Images
 function Header({ children, idProfileUser }) {
-  const [tabValue, setTabValue] = useState(0);
   const [TypeId, setTypeId] = useState('');
   const [userName, setUserName] = useState('');
   const [imageUser, setImageUser] = useState('');
-  const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
   const getAllData = () => {
-    axios.get(`${url}api/hotel/specificHotel/${idProfileUser}`)
+    axios.get(`${url}api/tycoon/get-tycoon-by-ID/${idProfileUser}`)
       .then((response) => {
         console.log('Data User Header')
-        console.log(response.data[0])
-        setTypeId(response.data[0].hotel_type_id.name)
-        setUserName(response.data[0].hotel_name)
-        if (response.data[0].img === undefined) {
+        console.log(response.data.data[0])
+        setTypeId(response.data.data[0].username)
+        setUserName(response.data.data[0].email)
+        if (response.data.data[0].img === undefined) {
           setImageUser(backgroundImage)
         } else {
-          const urlImage = response.data[0].img
+          const urlImage = response.data.data[0].img
           console.log(urlImage)
           setImageUser(urlImage)
         }
@@ -67,19 +65,17 @@ function Header({ children, idProfileUser }) {
       <Grid container spacing={3} alignItems="center">
         <Grid item>
           <MDAvatar
-            // src={`${url}${imageUser}`}
-            src={`${backgroundImage}`}
+            src={`${url}${imageUser}`}
+            // src={`${backgroundImage}`}
             alt="profile-image" size="xl" shadow="sm" />
         </Grid>
         <Grid item>
           <MDBox height="100%" mt={0.5} lineHeight={1}>
             <MDTypography variant="h5" fontWeight="medium">
-              {/* {userName} */}
-              Tycoon
+              {userName}
             </MDTypography>
             <MDTypography variant="button" color="text" fontWeight="regular">
-              {/* {TypeId} */}
-              tycoon@gmail.com
+              {TypeId}
             </MDTypography>
           </MDBox>
         </Grid>
@@ -87,62 +83,6 @@ function Header({ children, idProfileUser }) {
       </Grid>
       {children}
     </Card>
-    // <Card
-    // sx={{
-    //       position: "relative",
-    //       mt: 3,
-    //       mx: 3,
-    //       py: 2,
-    //       px: 2,
-    //   }}
-    // >
-    //   <Grid container spacing={3} alignItems="center">
-    //     <Grid item>
-    //       <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
-    //     </Grid>
-    //     <Grid item>
-    //       <MDBox height="100%" mt={0.5} lineHeight={1}>
-    //         <MDTypography variant="h5" fontWeight="medium">
-    //           Richard Davis
-    //         </MDTypography>
-    //         <MDTypography variant="button" color="text" fontWeight="regular">
-    //           CEO / Co-Founder
-    //         </MDTypography>
-    //       </MDBox>
-    //     </Grid>
-    //     {/* <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-    //       <AppBar position="static">
-    //         <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-    //           <Tab
-    //             label="App"
-    //             icon={
-    //               <Icon fontSize="small" sx={{ mt: -0.25 }}>
-    //                 home
-    //               </Icon>
-    //             }
-    //           />
-    //           <Tab
-    //             label="Message"
-    //             icon={
-    //               <Icon fontSize="small" sx={{ mt: -0.25 }}>
-    //                 email
-    //               </Icon>
-    //             }
-    //           />
-    //           <Tab
-    //             label="Settings"
-    //             icon={
-    //               <Icon fontSize="small" sx={{ mt: -0.25 }}>
-    //                 settings
-    //               </Icon>
-    //             }
-    //           />
-    //         </Tabs>
-    //       </AppBar>
-    //     </Grid> */}
-    //   </Grid>
-    //   {children}
-    // </Card>
   );
 }
 

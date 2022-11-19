@@ -57,7 +57,7 @@ function Users() {
         navigate('/shopsProfile' ,
         {
             state: {
-                idDispacher: "idData",
+                idDispacher: idData,
             }
         }
         );
@@ -261,7 +261,7 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        axios.get(`${url}api/tycoon/get-all`)
+        axios.get(`${url}api/shop/get-all`)
             .then((response) => {
                 console.log(response.data)
                 const users = response.data;
@@ -333,110 +333,29 @@ function Users() {
                                         <MDBox >
                                         <MDBox p={2}>
           <Grid container spacing={6}>
+          {user.map((row) => (
+                    <>
             <Grid item xs={12} md={6} xl={3} style={{cursor:"pointer"}}
               onClick={() => {
-                EditData("row._id")
+                EditData(row._id)
             }}>
               <DefaultProjectCard 
               
-                image={homeDecor1}
-                label="Shop Name"
-                title="modern"
-                description="18/11/2022"
+                image={`${url}${row.img}`}
+                label={`Name: ${row.name}`}
+                title="shop"
+                description={`created at: ${row.created_at}`}
                 action={{
                   type: "internal",
                   route: "/pages/profile/profile-overview",
                   color: "info",
                   label: "view project",
                 }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor2}
-                label="Shop Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor3}
-                label="Shop Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor4}
-                label="Shop Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor4}
-                label="Shop Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
+            </>
+                  ))}
+           
           </Grid>
         </MDBox>
                                             {/* <MaterialTable

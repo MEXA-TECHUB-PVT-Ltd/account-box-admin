@@ -47,7 +47,7 @@ function Users() {
         navigate('/tycoonProfile' ,
         {
             state: {
-                idDispacher: "idData",
+                idDispacher: idData,
             }
         }
         );
@@ -59,39 +59,39 @@ function Users() {
         setProductId(idData)
     }
     const BlockUser = (idData) => {
-        setSuccessSB(true)
+        // setSuccessSB(true)
 
-        console.log(idData)
-        // axios.put(`${url}api/hotel/updateHotel`, {
-        //     _id: idData,
-        //     status: 'block',
-        // }, { headers }).then(response => {
-        //     console.log(response);
-        //     setSuccessSB(true)
-        //     getAllData();
+        // console.log(idData)
+        axios.put(`${url}api/tycoon/update-credentials`, {
+            _id: idData,
+            status: 'block',
+        }, { headers }).then(response => {
+            console.log(response);
+            setSuccessSB(true)
+            getAllData();
 
 
-        // })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
+        })
+            .catch(err => {
+                console.log(err)
+            })
     }
     const CheckUser = (idData) => {
-        console.log(idData)
-        setSuccessSBV(true)
+        // console.log(idData)
+        // setSuccessSBV(true)
 
-        // axios.put(`${url}api/hotel/updateHotel`, {
-        //     _id: idData,
-        //     status: 'unblock',
-        // }, { headers }).then(response => {
-        //     console.log(response);
-        //     setSuccessSBV(true)
-        //     getAllData();
+        axios.put(`${url}api/tycoon/update-credentials`, {
+            _id: idData,
+            status: 'unblock',
+        }, { headers }).then(response => {
+            console.log(response);
+            setSuccessSBV(true)
+            getAllData();
 
-        // })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
+        })
+            .catch(err => {
+                console.log(err)
+            })
     }
     const headers = {
         'Content-Type': 'application/json'
@@ -108,26 +108,26 @@ function Users() {
 
     // Delete 
     const deleteDataProduct = () => {
-            setVisibleDelete(false)
+            // setVisibleDelete(false)
 
-            setSuccessDelete(true)
-        // axios.delete(`${url}api/hotel/deleteHotel/${productId}`
-        //     , { headers })
-        //     .then(res => {
+            // setSuccessDelete(true)
+        axios.delete(`${url}api/tycoon/delete/${productId}`
+            , { headers })
+            .then(res => {
 
-        //         console.log(res.data);
-        //         if (res.data.message === "Deleted Successfully") {
-        //             setVisibleDelete(false)
-        //             setSuccessDelete(true)
-        //             getAllData();
-        //             setLoadingLoader(false)
-        //         } else {
+                console.log(res.data);
+                if (res.data.message === "Deleted Successfully") {
+                    setVisibleDelete(false)
+                    setSuccessDelete(true)
+                    getAllData();
+                    setLoadingLoader(false)
+                } else {
 
-        //         }
+                }
 
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
+            }).catch(err => {
+                console.log(err)
+            })
 
     }
 
@@ -251,28 +251,14 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        const users= [
-            {
-                "_id": "636dfbbed1cb96d86e305177",
-                "email": "tycoon@gmail.com",
-                "password": "$2b$12$5VZiYFlS7GaA.A19tu9rK.tmP7nf2G5/J0UVTGEVy9l7ix5TXLxja",
-                "username": "Tycoon",
-                "profile_image": "/upload/image-16681465013762.PNG",
-                "status": "block",
-                "no_of_shops_created": "0",
-                "created_at": "27/10/2022",
-                "__v": 0,
-                "isLogin": true
-            }
-        ]
-        setUser(users);
-        // axios.get(`${url}api/tycoon/get-all`)
-        //     .then((response) => {
-        //         console.log(response.data)
-        //         const users = response.data;
-        //         setUser(users);
-        //     })
-        //     .catch(error => console.error(`Error:${error}`));
+       
+        axios.get(`${url}api/tycoon/get-all`)
+            .then((response) => {
+                console.log(response.data)
+                const users = response.data;
+                setUser(users);
+            })
+            .catch(error => console.error(`Error:${error}`));
     }
     useEffect(() => {
         getAllData();

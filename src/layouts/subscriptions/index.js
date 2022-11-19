@@ -47,7 +47,7 @@ function Users() {
         navigate('/subscriptionsProfile' ,
         {
             state: {
-                idDispacher: "idData",
+                idDispacher: idData,
             }
         }
         );
@@ -108,33 +108,33 @@ function Users() {
 
     // Delete 
     const deleteDataProduct = () => {
-            setVisibleDelete(false)
+            // setVisibleDelete(false)
 
-            setSuccessDelete(true)
-        // axios.delete(`${url}api/hotel/deleteHotel/${productId}`
-        //     , { headers })
-        //     .then(res => {
+            // setSuccessDelete(true)
+        axios.delete(`${url}api/subscription_history/delete/${productId}`
+            , { headers })
+            .then(res => {
 
-        //         console.log(res.data);
-        //         if (res.data.message === "Deleted Successfully") {
-        //             setVisibleDelete(false)
-        //             setSuccessDelete(true)
-        //             getAllData();
-        //             setLoadingLoader(false)
-        //         } else {
+                console.log(res.data);
+                if (res.data.message === "Deleted Successfully") {
+                    setVisibleDelete(false)
+                    setSuccessDelete(true)
+                    getAllData();
+                    setLoadingLoader(false)
+                } else {
 
-        //         }
+                }
 
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
+            }).catch(err => {
+                console.log(err)
+            })
 
     }
 
     const renderSuccessDelete = (
         <MDSnackbar
             icon="notifications"
-            title="Tycoon Deleted Successfully"
+            title="Subscription History Deleted Successfully"
             content="This is a notification message"
             open={successDelete}
             onClose={closeSuccessDelete}
@@ -146,7 +146,7 @@ function Users() {
     const renderSuccessSb = (
         <MDSnackbar
             icon="notifications"
-            title="Tycoon Blocked Successfully"
+            title="Subscription History Blocked Successfully"
             content="This is a notification message"
             open={successSB}
             onClose={closeSuccessSB}
@@ -158,7 +158,7 @@ function Users() {
     const renderSuccessSbVerify = (
         <MDSnackbar
             icon="notifications"
-            title="Tycoon Verified Successfully"
+            title="Subscription History Verified Successfully"
             content="This is a notification message"
             open={successSBV}
             onClose={closeSuccessSBV}
@@ -176,10 +176,11 @@ function Users() {
               <>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4}>
-                    <Avatar src={`${url}${row.profile_image}`} />
+                   {row.tycoon_id===null?<span>Null</span>: <Avatar src={`${url}${row.tycoon_id.profile_image}`} />}
+                   
                   </Grid>
                   <Grid item xs={12} md={8} style={{ marginTop: '10px' }}>
-                  {row.username===undefined?<span>Null</span>:<span>{row.username}</span>}
+                  {row.tycoon_id===null?<span>Null</span>:<span>{row.tycoon_id.username}</span>}
                   </Grid>
                 </Grid>
               </>
@@ -188,52 +189,31 @@ function Users() {
 
         { title: 'Email', field: 'email', width: '10%' , render: (row) =>
         <>
-          {row.email===undefined?<span>Null</span>:<span>{row.email}</span>}
+           {row.tycoon_id===null?<span>Null</span>:<span>{row.tycoon_id.email}</span>}
         </> },
-         { title: 'Shops', field: 'no_of_shops_created', width: '10%' , render: (row) =>
+         { title: 'Subscription Plan', field: 'subscription_plans_id', width: '10%' , render: (row) =>
          <>
-           {row.no_of_shops_created===undefined?<span>Null</span>:<span>{row.no_of_shops_created}</span>}
+           {row.subscription_plans_id===undefined?<span>Null</span>:<span>{row.subscription_plans_id.name}</span>}
          </> },
-        { title: 'Created At', field: 'created_at', width: '10%', render: (row) =>
+        { title: 'Price per Month', field: 'created_at', width: '10%', render: (row) =>
         <>
-          {row.created_at===undefined?<span>Null</span>:<span>{row.created_at}</span>}
+          {row.subscription_plans_id===undefined?<span>Null</span>:<span>{row.subscription_plans_id.price_per_month}</span>}
         </> },
-        {
-            title: 'Profile Status', field: 'status', width: '20%', render: (row) => <div>
-                {row.status==='unblock' ?
-                    <MDBadge badgeContent="Verified" color="success" variant="gradient" size="sm" />
-                    :
-                    <MDBadge badgeContent="Blocked" color="error" variant="gradient" size="sm" />
-
-                }
-
-            </div>
-        },
+         { title: 'Start Date', field: 'start_date', width: '10%', render: (row) =>
+         <>
+           {row.start_date===undefined?<span>Null</span>:<span>{row.start_date}</span>}
+         </> },
+          { title: 'End Date', field: 'end_date', width: '10%', render: (row) =>
+          <>
+            {row.end_date===undefined?<span>Null</span>:<span>{row.end_date}</span>}
+          </> },
+       
         {
             title: 'Actions', width: '10%', field: 'blockStatus',
             render: (row) =>
                 <>
 
-                    {row.status==='unblock' ?
-                        <Tooltip title="Block Hotel">
-
-                            <Icon fontSize="small" style={{ cursor: 'pointer', color: '#fea21e', marginRight: '5px' }} onClick={() => {
-                                BlockUser(row._id)
-                            }}>remove_circle_outline_icon</Icon>
-                        </Tooltip>
-
-                        :
-                        <Tooltip title="Verify Hotel">
-
-                            <Icon fontSize="small" style={{ cursor: 'pointer', color: '#5db461', marginRight: '5px' }} onClick={() => {
-                                CheckUser(row._id)
-                            }}>check_circle_outline_icon</Icon>
-                        </Tooltip>
-
-
-                    }
                     <Tooltip title="View">
-
                         <Icon fontSize="small" style={{ cursor: 'pointer', color: 'grey', marginRight: '5px' }} onClick={() => {
                             EditData(row._id)
                         }}>visibility_icon</Icon>
@@ -251,28 +231,28 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        const users= [
-            {
-                "_id": "636dfbbed1cb96d86e305177",
-                "email": "tycoon@gmail.com",
-                "password": "$2b$12$5VZiYFlS7GaA.A19tu9rK.tmP7nf2G5/J0UVTGEVy9l7ix5TXLxja",
-                "username": "Tycoon",
-                "profile_image": "/upload/image-16681465013762.PNG",
-                "status": "block",
-                "no_of_shops_created": "0",
-                "created_at": "27/10/2022",
-                "__v": 0,
-                "isLogin": true
-            }
-        ]
-        setUser(users);
-        // axios.get(`${url}api/tycoon/get-all`)
-        //     .then((response) => {
-        //         console.log(response.data)
-        //         const users = response.data;
-        //         setUser(users);
-        //     })
-        //     .catch(error => console.error(`Error:${error}`));
+        // const users= [
+        //     {
+        //         "_id": "636dfbbed1cb96d86e305177",
+        //         "email": "tycoon@gmail.com",
+        //         "password": "$2b$12$5VZiYFlS7GaA.A19tu9rK.tmP7nf2G5/J0UVTGEVy9l7ix5TXLxja",
+        //         "username": "Tycoon",
+        //         "profile_image": "/upload/image-16681465013762.PNG",
+        //         "status": "block",
+        //         "no_of_shops_created": "0",
+        //         "created_at": "27/10/2022",
+        //         "__v": 0,
+        //         "isLogin": true
+        //     }
+        // ]
+        // setUser(users);
+        axios.get(`${url}api/subscription_history/get-all`)
+            .then((response) => {
+                console.log(response.data)
+                const users = response.data;
+                setUser(users);
+            })
+            .catch(error => console.error(`Error:${error}`));
     }
     useEffect(() => {
         getAllData();
@@ -353,7 +333,7 @@ function Users() {
                                                         <Grid container spacing={2} align="center">
                                                             <Grid item xs={12} md={12}>
                                                                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                                                                    Are you sure you want to delete<br/> this Tycoon?
+                                                                    Are you sure you want to delete<br/> this Subscription History?
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>

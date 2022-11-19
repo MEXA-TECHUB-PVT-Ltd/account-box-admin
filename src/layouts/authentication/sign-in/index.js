@@ -1,37 +1,25 @@
 import React, { useState, useEffect } from "react";
-
-// react-router-dom components
 import { Link } from "react-router-dom";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import EmailIcon from '@mui/icons-material/Email';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-// Material Dashboard 2 React components
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from "axios";
 import url from "url/url";
-import logo from "assets/images/logo2.jpg"
 import "./style.css"
 import { useNavigate } from 'react-router-dom';
-import Input from '@mui/material/Input';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-// Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 import MDSnackbar from "components/MDSnackbar";
 // Images
-// import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import bgImage from "assets/images/curve.png";
-import CoverLayout from "../components/CoverLayout";
-
 
 function Basic() {
   const [values, setValues] = React.useState({
@@ -59,7 +47,6 @@ function Basic() {
   const [errorSBPass, setErrorSBPass] = useState(false);
   const [errorlengthSBPass, setErrorlengthSBPass] = useState(false);
 
-
   const closeErrorSB = () => setErrorSB(false);
   const closeErrorSBPass = () => setErrorSBPass(false);
   const closeErrorlengthSBPass = () => setErrorlengthSBPass(false);
@@ -74,27 +61,22 @@ function Basic() {
       console.log('error')
       setErrorlengthSBPass(true)
     } else {
-      localStorage.setItem('items', JSON.stringify("response.data._id"));
-        navigate('/dashboard');
-      // axios.put(`${url}api/admin/loginAdmin`, {
-      //   email: email,
-      //   password: password,
-      // }, { headers }).then(response => {
-      //   console.log(response)
-      //   // if (response.data === "Logged in successfully") {
-      //   // navigate('/authentication/sign-in');
-      //   // localStorage.setItem('items', JSON.stringify(response.data._id));
-      //   localStorage.setItem('items', JSON.stringify(response.data._id));
-      //   navigate('/dashboard'
-      //   );
-      //   // } else {
-      //   //   setErrorSBPass(true)
-      //   // }
-      // })
-      //   .catch(err => {
-      //     console.log(err)
-      //     setErrorSBPass(true)
-      //   })
+      axios.put(`${url}api/admin/login`, {
+        email: email,
+        password: password,
+      }, { headers }).then(response => {
+        console.log(response)
+        if (response.data.message === "Login Successfully") {
+          localStorage.setItem('items', JSON.stringify(response.data.data._id));
+          navigate('/dashboard');
+        } else {
+          setErrorSBPass(true)
+        }
+      })
+        .catch(err => {
+          console.log(err)
+          setErrorSBPass(true)
+        })
     }
   }
   const renderErrorSB = (
@@ -103,7 +85,6 @@ function Basic() {
       icon="warning"
       title="Error Message"
       content="Please Fill All Fields to continue"
-      // dateTime="11 mins ago"
       open={errorSB}
       onClose={closeErrorSB}
       close={closeErrorSB}
@@ -129,37 +110,23 @@ function Basic() {
       icon="warning"
       title="Error Message"
       content="Password should be atleast 6 characters long"
-      // dateTime="11 mins ago"
       open={errorlengthSBPass}
       onClose={closeErrorlengthSBPass}
       close={closeErrorlengthSBPass}
       bgWhite
     />
   );
-  // const [items, setItems] = useState([]);
-  // useEffect(() => {
-  //   const items = JSON.parse(localStorage.getItem('items'));
-  //   if (items === 'NULLDATA') {
-  //     // setItems(items);
-  //     console.log("items")
-  //     console.log(items)
-  //     // navigate()
-
-  //   } else {
-  //     navigate('/dashboard');
-  //   }
-  // }, []);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('items'));
     console.log(items)
-    if (items==null) {
-     setItems(items);
-    console.log("items")
-    console.log(items)
+    if (items == null) {
+      setItems(items);
+      console.log("items")
+      console.log(items)
 
-    }else{
+    } else {
       navigate('/dashboard')
     }
   }, []);
@@ -180,22 +147,10 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Admin Sign In
           </MDTypography>
-          {/* <img
-        src={logo}
-        // srcSet={`${item.img}?w=161&fit=crop&auto=format&dpr=2 2x`}
-        alt="{item.title}"
-        loading="lazy"
-        width="100%"
-        height="20%"
-      /> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              {/* <MDInput value={email} 
-              className="textFieldsDataMail"
-                              onChange={(e) => setEmail(e.target.value)
-                              } type="email" label="Email" /> */}
               <FormControl variant="outlined" style={{ width: '100%' }}>
                 <InputLabel >Email</InputLabel>
                 <OutlinedInput
@@ -239,22 +194,7 @@ function Basic() {
                   label="Password"
                 />
               </FormControl>
-              {/* <MDInput value={password}
-                              onChange={(e) => setPassword(e.target.value)
-                              } type="password" label="Password" fullWidth /> */}
             </MDBox>
-            {/* <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox> */}
             <MDBox mt={4} mb={1}>
               <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler() }}>
                 sign in

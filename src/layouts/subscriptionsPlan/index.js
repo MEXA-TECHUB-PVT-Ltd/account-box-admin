@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from "react";
 import url from "url/url";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import Tooltip from '@mui/material/Tooltip';
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDSnackbar from "components/MDSnackbar";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import MDButton from "components/MDButton";
-import Icon from "@mui/material/Icon";
-import MaterialTable from 'material-table';
-import Button from '@mui/material/Button';
 import DotLoader from "react-spinners/DotLoader";
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import MDBadge from "components/MDBadge";
 import Box from '@mui/material/Box';
-import MasterCard from "examples/Cards/MasterCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
-
+import Fade from '@mui/material/Fade';
+import Backdrop from '@mui/material/Backdrop';
+import CloseIcon from '@mui/icons-material/Close';
 // Billing page components
-import PaymentMethod from "layouts/subscriptionsPlan/components/components/PaymentMethod";
-import Invoices from "layouts/subscriptionsPlan/components/components/Invoices";
-import BillingInformation from "layouts/subscriptionsPlan/components/components/BillingInformation";
-import Transactions from "layouts/subscriptionsPlan/components/components/Transactions";
+import TextField from '@mui/material/TextField';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -52,12 +42,12 @@ function Users() {
     // get 
     const EditData = (idData) => {
         console.log(idData)
-        navigate('/hotelsProfile' ,
-        {
-            state: {
-                idDispacher: idData,
+        navigate('/hotelsProfile',
+            {
+                state: {
+                    idDispacher: idData,
+                }
             }
-        }
         );
     }
     // Delete 
@@ -65,41 +55,6 @@ function Users() {
     const deleteData = (idData) => {
         setVisibleDelete(true)
         setProductId(idData)
-    }
-    const BlockUser = (idData) => {
-        setSuccessSB(true)
-
-        console.log(idData)
-        // axios.put(`${url}api/hotel/updateHotel`, {
-        //     _id: idData,
-        //     status: 'block',
-        // }, { headers }).then(response => {
-        //     console.log(response);
-        //     setSuccessSB(true)
-        //     getAllData();
-
-
-        // })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-    }
-    const CheckUser = (idData) => {
-        console.log(idData)
-        setSuccessSBV(true)
-
-        // axios.put(`${url}api/hotel/updateHotel`, {
-        //     _id: idData,
-        //     status: 'unblock',
-        // }, { headers }).then(response => {
-        //     console.log(response);
-        //     setSuccessSBV(true)
-        //     getAllData();
-
-        // })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
     }
     const headers = {
         'Content-Type': 'application/json'
@@ -116,9 +71,9 @@ function Users() {
 
     // Delete 
     const deleteDataProduct = () => {
-            setVisibleDelete(false)
+        setVisibleDelete(false)
 
-            setSuccessDelete(true)
+        setSuccessDelete(true)
         // axios.delete(`${url}api/hotel/deleteHotel/${productId}`
         //     , { headers })
         //     .then(res => {
@@ -154,7 +109,7 @@ function Users() {
     const renderSuccessSb = (
         <MDSnackbar
             icon="notifications"
-            title="Tycoon Blocked Successfully"
+            title="Subscription Plan Updated Successfully"
             content="This is a notification message"
             open={successSB}
             onClose={closeSuccessSB}
@@ -166,7 +121,7 @@ function Users() {
     const renderSuccessSbVerify = (
         <MDSnackbar
             icon="notifications"
-            title="Tycoon Verified Successfully"
+            title="Subscription Plan Created Successfully"
             content="This is a notification message"
             open={successSBV}
             onClose={closeSuccessSBV}
@@ -178,90 +133,15 @@ function Users() {
 
     const [user, setUser] = useState([]);
 
-    let columns = [
-        {
-            title: 'Name', field: 'username', width: '20%', render: (row) =>
-              <>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={4}>
-                    <Avatar src={`${url}${row.profile_image}`} />
-                  </Grid>
-                  <Grid item xs={12} md={8} style={{ marginTop: '10px' }}>
-                  {row.username===undefined?<span>Null</span>:<span>{row.username}</span>}
-                  </Grid>
-                </Grid>
-              </>
-          },
-        
-
-        { title: 'Email', field: 'email', width: '10%' , render: (row) =>
-        <>
-          {row.email===undefined?<span>Null</span>:<span>{row.email}</span>}
-        </> },
-         { title: 'Shops', field: 'no_of_shops_created', width: '10%' , render: (row) =>
-         <>
-           {row.no_of_shops_created===undefined?<span>Null</span>:<span>{row.no_of_shops_created}</span>}
-         </> },
-        { title: 'Created At', field: 'created_at', width: '10%', render: (row) =>
-        <>
-          {row.created_at===undefined?<span>Null</span>:<span>{row.created_at}</span>}
-        </> },
-        {
-            title: 'Profile Status', field: 'status', width: '20%', render: (row) => <div>
-                {row.status==='unblock' ?
-                    <MDBadge badgeContent="Verified" color="success" variant="gradient" size="sm" />
-                    :
-                    <MDBadge badgeContent="Blocked" color="error" variant="gradient" size="sm" />
-
-                }
-
-            </div>
-        },
-        {
-            title: 'Actions', width: '10%', field: 'blockStatus',
-            render: (row) =>
-                <>
-
-                    {row.status==='unblock' ?
-                        <Tooltip title="Block Hotel">
-
-                            <Icon fontSize="small" style={{ cursor: 'pointer', color: '#fea21e', marginRight: '5px' }} onClick={() => {
-                                BlockUser(row._id)
-                            }}>remove_circle_outline_icon</Icon>
-                        </Tooltip>
-
-                        :
-                        <Tooltip title="Verify Hotel">
-
-                            <Icon fontSize="small" style={{ cursor: 'pointer', color: '#5db461', marginRight: '5px' }} onClick={() => {
-                                CheckUser(row._id)
-                            }}>check_circle_outline_icon</Icon>
-                        </Tooltip>
-
-
-                    }
-                    <Tooltip title="View">
-
-                        <Icon fontSize="small" style={{ cursor: 'pointer', color: 'grey', marginRight: '5px' }} onClick={() => {
-                            EditData(row._id)
-                        }}>visibility_icon</Icon>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                        <Icon fontSize="small" style={{ cursor: 'pointer', color: 'red' }} onClick={() => {
-                            deleteData(row._id)
-                        }}>delete</Icon>
-                    </Tooltip>
-
-                </>
-        },
-    ]
     // loader 
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
-        axios.get(`${url}api/tycoon/get-all`)
+        axios.get(`${url}api/subscriptionPlan/get-all`)
             .then((response) => {
+                console.log("response.data")
                 console.log(response.data)
+
                 const users = response.data;
                 setUser(users);
             })
@@ -276,7 +156,87 @@ function Users() {
         }, 3000)
     }, []);
     const [items, setItems] = useState([]);
+    const [SubscriptionName, setSubscriptionName] = useState('');
+    const [SubscriptionPrice, setSubscriptionPrice] = useState('');
+    const [SubscriptionShops, setSubscriptionShops] = useState('');
+    const [SubscriptionPlanId, setSubscriptionPlanId] = useState('');
+    const [SubscriptionNameAdd, setSubscriptionNameAdd] = useState('');
+    const [SubscriptionPriceAdd, setSubscriptionPriceAdd] = useState('');
+    const [SubscriptionShopsAdd, setSubscriptionShopsAdd] = useState('');
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = (id) => {
+        console.log(id)
+        axios.get(`${url}api/subscriptionPlan/get-subscription-plan-by-ID/${id}`)
+            .then((response) => {
+                console.log('Data Subscription Plan')
+                console.log(response.data.data[0])
+                setSubscriptionPlanId(response.data.data[0]._id)
+                setSubscriptionName(response.data.data[0].name)
+                setSubscriptionPrice(response.data.data[0].price_per_month)
+                setSubscriptionShops(response.data.data[0].no_of_shops)
+                setOpen(true);
+
+
+            })
+            .catch(error => console.error(`Error:${error}`));
+    }
+    const [openAdd, setOpenAdd] = React.useState(false);
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    }
+    const handleClose = () => setOpen(false);
+    const handleCloseAdd = () => setOpenAdd(false);
+
+    const submitHandler = () => {
+        axios.put(`${url}api/subscriptionPlan/update`, {
+            _id: SubscriptionPlanId,
+            name: SubscriptionName,
+            no_of_shops: SubscriptionShops,
+            price_per_month: SubscriptionPrice
+        }, { headers }).then(response => {
+            console.log(response)
+            setOpen(false)
+            setSuccessSB(true)
+            getAllData();
+        })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
+    const submitHandler1 = () => {
+        axios.post(`${url}api/subscriptionPlan/create`, {
+            name: SubscriptionNameAdd,
+            no_of_shops: SubscriptionShopsAdd,
+            price_per_month: SubscriptionPriceAdd,
+            is_free_trail:'false'
+        }, { headers }).then(response => {
+            console.log(response);
+            setSuccessSBV(true)
+            getAllData();
+
+        })
+            .catch(err => {
+                console.log(err)
+            })
+
+        axios.put(`${url}api/subscriptionPlan/update`, {
+            _id: SubscriptionPlanId,
+            name: SubscriptionName,
+            no_of_shops: SubscriptionShops,
+            price_per_month: SubscriptionPrice
+        }, { headers }).then(response => {
+            console.log(response)
+            setOpenAdd(false)
+            setSuccessSB(true)
+            getAllData();
+        })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem('items'));
         if (items) {
@@ -298,51 +258,201 @@ function Users() {
                 </Grid>
                 :
                 <>
-                        <MDBox pt={6} pb={3}>
-                            <Grid container spacing={6}>
-                                <Grid item xs={12}>
-                                    {/* <Card > */}
-                                    <Grid container spacing={3}>
-                {/* <Grid item xs={12} md={3}>
+                    <MDBox pt={6} pb={3}>
+                        <Grid container spacing={6}>
+                            <Grid item xs={12}>
+                                {/* <Card > */}
+                                <Grid container spacing={3}>
+                                    {/* <Grid item xs={12} md={3}>
                   <MasterCard number={4562112245947852} holder="jack peterson" expires="11/22" />
                 </Grid> */}
-                <Grid item xs={12} md={3} >
-                  <DefaultInfoCard
-                    icon="account_balance"
-                    title="Free Trial"
-                    description="No of shops:1"
-                    value="$0"
-                  />
-                </Grid>
-                <Grid item xs={12} md={3} >
-                  <DefaultInfoCard
-                    icon="paypal"
-                    title="Monthly"
-                    description="No of shops:10"
-                    value="$455.00"
-                  />
-                </Grid>
-                <Grid item xs={12} md={3} >
-                  <DefaultInfoCard
-                    icon="paypal"
-                    title="Yealy"
-                    description="No of shops:100"
-                    value="$1455.00"
-                  />
-                </Grid>
-                <Grid item xs={12} md={3} >
-                  <DefaultInfoCard
-                    icon="add"
-                    title="Add Plan"
-                    description="Add shops"
-                    value="$0"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <PaymentMethod />
-                </Grid>
-              </Grid>
-                                        {/* <MDBox
+                                    {user.map((row) => (
+                                        <Grid item xs={12} md={3} style={{ cursor: 'pointer' }} onClick={() => handleOpen(row._id)}>
+                                            <DefaultInfoCard
+                                                icon="edit"
+                                                title={row.name}
+                                                description={`No of Shops: ${row.no_of_shops}`}
+                                                value={`${row.price_per_month}$`}
+                                            />
+                                        </Grid>
+                                    ))}
+                                    <Grid item xs={12} md={3} style={{ cursor: 'pointer' }} onClick={() => handleOpenAdd()}>
+                                        <DefaultInfoCard
+                                            icon="add"
+                                            title="Add Plan"
+                                            description="Add shops No"
+                                            value="$0"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {/* <PaymentMethod /> */}
+                                    </Grid>
+                                </Grid>
+                                <div>
+                                    <Modal
+                                        aria-labelledby="transition-modal-title"
+                                        aria-describedby="transition-modal-description"
+                                        open={open}
+                                        onClose={handleClose}
+                                        closeAfterTransition
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                            timeout: 500,
+                                        }}
+                                    >
+                                        <Fade in={open}>
+                                            <Box sx={style}>
+
+                                                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                                </Typography>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={10} md={10}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            Edit Subscription Plan
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={1} md={1}>
+                                                        <CloseIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            Name
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField
+                                                            value={SubscriptionName}
+                                                            onChange={(e) => setSubscriptionName(e.target.value)}
+                                                            style={{ width: '100%' }} variant="outlined" />
+
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            Price
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField
+                                                            value={SubscriptionPrice}
+                                                            onChange={(e) => setSubscriptionPrice(e.target.value)}
+                                                            style={{ width: '100%' }} variant="outlined" />
+
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            No of shops
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField value={SubscriptionShops}
+                                                            onChange={(e) => setSubscriptionShops(e.target.value)} style={{ width: '100%' }} variant="outlined" />
+
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler() }}>
+                                                            Update
+                                                        </MDButton>
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+
+                                                    </Grid>
+                                                </Grid>
+                                            </Box>
+                                        </Fade>
+                                    </Modal>
+                                </div>
+                                <div>
+                                    <Modal
+                                        aria-labelledby="transition-modal-title"
+                                        aria-describedby="transition-modal-description"
+                                        open={openAdd}
+                                        onClose={handleCloseAdd}
+                                        closeAfterTransition
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                            timeout: 500,
+                                        }}
+                                    >
+                                        <Fade in={openAdd}>
+                                            <Box sx={style}>
+
+                                                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                                </Typography>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={10} md={10}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            Add Subscription Plan
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={1} md={1}>
+                                                        <CloseIcon onClick={handleCloseAdd} style={{ cursor: 'pointer' }} />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            Name
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField
+                                                            value={SubscriptionNameAdd}
+                                                            onChange={(e) => setSubscriptionNameAdd(e.target.value)}
+                                                            style={{ width: '100%' }} variant="outlined" />
+
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            Price
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField
+                                                            value={SubscriptionPriceAdd}
+                                                            onChange={(e) => setSubscriptionPriceAdd(e.target.value)}
+                                                            style={{ width: '100%' }} variant="outlined" />
+
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                            No of shops
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField value={SubscriptionShopsAdd}
+                                                            onChange={(e) => setSubscriptionShopsAdd(e.target.value)} style={{ width: '100%' }} variant="outlined" />
+
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler1() }}>
+                                                            Submit
+                                                        </MDButton>
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+
+                                                    </Grid>
+                                                </Grid>
+                                            </Box>
+                                        </Fade>
+                                    </Modal>
+                                </div>
+                                <div>
+                                {renderSuccessSb}
+                                </div>
+                                <div>
+                                {renderSuccessSbVerify}
+                                </div>
+                                {/* <MDBox
                                             mx={2}
                                             mt={-3}
                                             py={3}
@@ -358,7 +468,7 @@ function Users() {
                                             </MDTypography>
                                         </MDBox> */}
 
-                                        {/* <MDBox >
+                                {/* <MDBox >
                                             <MaterialTable
                                                 title=""
                                                 columns={columns}
@@ -414,10 +524,10 @@ function Users() {
                                                 {renderSuccessSbVerify}
                                             </div>
                                         </MDBox> */}
-                                    {/* </Card> */}
-                                </Grid>
+                                {/* </Card> */}
                             </Grid>
-                        </MDBox>
+                        </Grid>
+                    </MDBox>
                 </>
             }
         </DashboardLayout>

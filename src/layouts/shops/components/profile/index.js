@@ -34,7 +34,7 @@ import Paper from '@mui/material/Paper';
 import homeDecor1 from "assets/images/home-decor-1.jpg";
 import homeDecor2 from "assets/images/home-decor-2.jpg";
 import homeDecor3 from "assets/images/home-decor-3.jpg";
-import homeDecor4 from "assets/images/home-decor-4.jpeg";
+import homeDecor4 from "assets/images/abc.png";
 import MDTypography from "components/MDTypography";
 
 
@@ -73,20 +73,20 @@ function Profile({ idProfile }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
-  const [HotelType, setHotelType] = useState('');
-  const [HotelPrice, setHotelPrice] = useState('');
+  const [ShopName, setShopName] = useState('');
+  const [CreatedAtShop, setCreatedAtShop] = useState('');
 
-  const [CompanyName, setCompanyName] = useState('');
+  const [TycoonNAme, setTycoonNAme] = useState('');
   const [city, setcity] = useState('');
   const [state, setstate] = useState('');
-  const [status, setstatus] = useState('');
+  const [ManagerName, setManagerName] = useState('');
   const [DispacherDriver, setDispacherDriver] = useState([]);
   const [DispacherDriverOrders, setDispacherDriverOrders] = useState([]);
 
-  const [Country, setCountry] = useState('');
+  const [TycoonEmail, setTycoonEmail] = useState('');
   const [createdAt, setcreatedAt] = useState('');
   const [zip_code, setzip_code] = useState('');
-  const [phoneNo, setphoneNo] = useState('');
+  const [ManagerEmail, setManagerEmail] = useState('');
   const [streetAddress, setstreetAddress] = useState('');
   const [account_holder_name, setaccount_holder_name] = useState('');
   const [account_number, setaccount_number] = useState('');
@@ -94,70 +94,63 @@ function Profile({ idProfile }) {
   const [expiry_date, setexpiry_date] = useState('');
   const [iban, setiban] = useState('');
   const [swift_code, setswift_code] = useState('');
+  const [ShopImage, setShopImage] = useState('');
+  const [LengthProduct, setLengthProducts] = useState('');
+  const [LengthCashier, setLengthCashier] = useState('');
+
+
+
   const headers = {
     'Content-Type': 'application/json'
   }
   const getAllData = () => {
-    axios.get(`${url}api/hotel/specificHotel/${idProfile}`)
+    axios.get(`${url}api/shop/get-Shop-by-ID/${idProfile}`)
       .then((response) => {
-        console.log('Data User Picddddd')
-        console.log(response)
-        if (response.data[0].img === undefined) {
+        console.log('Data SHop SIngle')
+        console.log(response.data.data[0])
+        if (response.data.data[0].img === undefined) {
           console.log('empty image')
         } else {
-          console.log(response.data[0].profileImage)
+          console.log(response.data.data[0].img)
+          setShopImage(response.data.data[0].img)
         }
-        setHotelType(response.data[0].hotel_type_id.name)
-        setHotelPrice(response.data[0].hotel_type_id.price)
-        setCompanyName(response.data[0].hotel_name)
-        setcity(response.data[0].city)
-        setCountry(response.data[0].country)
-        setstate(response.data[0].state)
-        setstatus(response.data[0].status)
-        setcreatedAt(response.data[0].created_at)
-        setphoneNo(response.data[0].phoneno)
-        setstreetAddress(response.data[0].street_address)
-        setzip_code(response.data[0].zip_code)
-        if (response.data[0].payment_detail_id === undefined) {
-          console.log('no payment detail')
-        } else {
-          setaccount_holder_name(response.data[0].payment_detail_id.account_holder_name)
-          setaccount_number(response.data[0].payment_detail_id.account_number)
-          setbank_name(response.data[0].payment_detail_id.bank_name)
-          setexpiry_date(response.data[0].payment_detail_id.expiry_date)
-          setiban(response.data[0].payment_detail_id.iban)
-          setswift_code(response.data[0].payment_detail_id.swift_code)
-
-        }
+        setShopName(response.data.data[0].name)
+        setCreatedAtShop(response.data.data[0].created_at)
+        setTycoonNAme(response.data.data[0].tycoon_id.username)
+        setTycoonEmail(response.data.data[0].tycoon_id.email)
+        setManagerName(response.data.data[0].manager_id.name)
+        setManagerEmail(response.data.data[0].manager_id.email)
       })
       .catch(error => console.error(`Error:${error}`));
   }
   const getAllDataPosts = () => {
-    axios.get(`${url}api/hotel/getHotelGuests/${idProfile}`)
+    axios.get(`${url}api/shopProducts/get-all-shop-products/${idProfile}`)
       .then((response) => {
-        console.log('Data Guests Hotel')
+        console.log('Data Guests Products ')
         console.log(response.data)
-        setDispacherDriver(response.data)
+        setDispacherDriver(response.data.data)
+        setLengthProducts(response.data.data.length)
       })
       .catch(error => console.error(`Error:${error}`));
   }
   const getAllDataOrders = () => {
-    axios.get(`${url}api/Order/hotelOrders/${idProfile}`)
+    axios.get(`${url}api/shopCashiers/get-all-shop-cashiers/${idProfile}`)
       .then((response) => {
-        console.log('Data Guests Orders')
+        console.log('Data SHOP CASHIErs')
         console.log(response.data)
-        setDispacherDriverOrders(response.data)
+        setDispacherDriverOrders(response.data.data)
+        setLengthCashier(response.data.data.length)
       })
       .catch(error => console.error(`Error:${error}`));
   }
   const [DriverTransaction, setDriverTransaction] = useState([]);
 
   const getAllDataTransaction = () => {
-    axios.get(`${url}api/invoice/getHotelTransactionCompleted/${idProfile}`)
+    axios.get(`${url}api/inventory/get-single-shop-inventorys/${idProfile}`)
       .then((response) => {
         console.log('Data Hotel Transaction')
         console.log(response.data)
-        setDriverTransaction(response.data)
+        setDriverTransaction(response.data.data)
       })
       .catch(error => console.error(`Error:${error}`));
   }
@@ -217,22 +210,10 @@ function Profile({ idProfile }) {
         <Grid container spacing={6}>
             <Grid item xs={12} md={6} >
               <DefaultProjectCard
-                image={homeDecor1}
-                label="Shop Name"
-                // title="modern"
-                description="18/11/2022"
-                // action={{
-                //   type: "internal",
-                //   route: "/pages/profile/profile-overview",
-                //   color: "info",
-                //   label: "view project",
-                // }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
+                image={`${url}${ShopImage}`}
+                label={ShopName}
+                title="Shop Image"
+                description={CreatedAtShop}
               />
             </Grid>
             <Grid item xs={12} md={6} >
@@ -240,16 +221,14 @@ function Profile({ idProfile }) {
                     <ProfileInfoCard
                       title="Details"
                       info={{
-                        shopName: "shop Name",
-                        TycoonName: "Tycoon",
-                        tycoonEmail: "tycoon@gmail.com",
-                        managerName: "Manager",
-                        managerEmail: "manager@gmail.com",
-                        totalProducts: "10",
-                        totalCashiers: "10",
-                        // name: "Monthly",
-                        // noOfShops: "10",
-                        // pricePerMonth: "20$",
+                        shopName: ShopName,
+                        tycoonName: TycoonNAme,
+                        tycoonEmail: TycoonEmail,
+                        managerName: ManagerName,
+                        managerEmail: ManagerEmail,
+                        totalProducts: LengthProduct,
+                        totalCashiers: LengthCashier,
+                      
                       }}
                       social={[
                         {
@@ -290,86 +269,26 @@ function Profile({ idProfile }) {
                                             </MDTypography>
                                         </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor3}
-                label="Product Name"
-                title="modern"
-                description="Price"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor4}
-                label="Product Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor1}
-                label="Product Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor2}
-                label="Product Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
+            {DispacherDriver.map((row) => (
+                    <>
+                      <Grid item xs={12} md={6} xl={3} style={{ cursor: "pointer" }}
+                        >
+                        <DefaultProjectCard
+                          image={homeDecor4}
+                          label={row.product_id.name}
+                          title="shop"
+                          description={row.product_id.price}
+                          action={{
+                            type: "internal",
+                            route: "/pages/profile/profile-overview",
+                            color: "info",
+                            label: "view project",
+                          }}
+                        />
+                      </Grid>
+                    </>
+                  ))}
+           
             <Grid item xs={12} md={12}>
             <MDBox
                                             // mx={2}
@@ -387,86 +306,26 @@ function Profile({ idProfile }) {
                                             </MDTypography>
                                         </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor3}
-                label="Cashier name"
-                title="modern"
-                description="Phone No"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor2}
-                label="Cashier Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor4}
-                label="Cashier Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor1}
-                label="Cashier Name"
-                title="modern"
-                description="18/11/2022"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
+            {DispacherDriverOrders.map((row) => (
+                    <>
+                      <Grid item xs={12} md={6} xl={3} style={{ cursor: "pointer" }}
+                        >
+                        <DefaultProjectCard
+                          image="https://www.flaticon.com/free-icon/product-image_1440523"
+                          label={row.cashier_id.name}
+                          title="Cashier"
+                          description={row.cashier_id.phone_no}
+                          action={{
+                            type: "internal",
+                            route: "/pages/profile/profile-overview",
+                            color: "info",
+                            label: "view project",
+                          }}
+                        />
+                      </Grid>
+                    </>
+                  ))}
+          
             <Grid item xs={12} md={12}>
             <MDBox
                                             // mx={2}
@@ -484,86 +343,26 @@ function Profile({ idProfile }) {
                                             </MDTypography>
                                         </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor3}
-                label="Serial No:2349"
-                title="modern"
-                description="Equipment Name"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor2}
-                label="Serial No:2349"
-                title="modern"
-                description="Equipment Name"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor4}
-                label="Serial No:2349"
-                title="modern"
-                description="Equipment Name"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-            <DefaultProjectCard
-                image={homeDecor1}
-                label="Serial No:2349"
-                title="modern"
-                description="Equipment Name"
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                // authors={[
-                //   { image: team1, name: "Elena Morison" },
-                //   { image: team2, name: "Ryan Milly" },
-                //   { image: team3, name: "Nick Daniel" },
-                //   { image: team4, name: "Peterson" },
-                // ]}
-              />
-            </Grid>
+            {DriverTransaction.map((row) => (
+                    <>
+                      <Grid item xs={12} md={6} xl={3} style={{ cursor: "pointer" }}
+                        >
+                        <DefaultProjectCard
+                          image="https://www.flaticon.com/free-icon/product-image_1440523"
+                          label={row.equipment_name}
+                          title="Inventory"
+                          description={row.serial_no}
+                          action={{
+                            type: "internal",
+                            route: "/pages/profile/profile-overview",
+                            color: "info",
+                            label: "view project",
+                          }}
+                        />
+                      </Grid>
+                    </>
+                  ))}
+           
           </Grid>
         </MDBox>
       {/* </Header> */}

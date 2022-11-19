@@ -54,7 +54,7 @@ function DispachersProfile() {
                 :
                 <>
                 {/* <Profile idProfile={state.idDispacher} /> */}
-                <Profile idProfile="{state.idDispacher} "/>
+                <Profile idProfile={state.idDispacher}/>
 
                 </>
             }
