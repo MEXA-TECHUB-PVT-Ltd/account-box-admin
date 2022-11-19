@@ -15,11 +15,9 @@ import Icon from "@mui/material/Icon";
 import MaterialTable from 'material-table';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-
 import DotLoader from "react-spinners/DotLoader";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import MDBadge from "components/MDBadge";
 import Box from '@mui/material/Box';
 
 const style = {
@@ -60,35 +58,30 @@ function Users() {
         setVisibleDelete(true)
         setProductId(idData)
     }
-   
     const headers = {
         'Content-Type': 'application/json'
     }
     // Update 
     const closeSuccessDelete = () => setSuccessDelete(false);
     const [successDelete, setSuccessDelete] = useState(false);
-
     // Delete 
     const deleteDataProduct = () => {
-        setVisibleDelete(false)
-        setSuccessDelete(true)
-        // axios.delete(`${url}api/admin/deleteadmin/${productId}`
-        //     , { headers })
-        //     .then(res => {
+        axios.delete(`${url}api/admin/delete/${productId}`
+            , { headers })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.message === "Deleted Successfully") {
+                    setVisibleDelete(false)
+                    setSuccessDelete(true)
+                    getAllData();
+                    setLoadingLoader(false)
+                } else {
 
-        //         console.log(res.data);
-        //         if (res.data.message === "Deleted Successfully") {
-        //             setVisibleDelete(false)
-        //             setSuccessDelete(true)
-        //             getAllData();
-        //             setLoadingLoader(false)
-        //         } else {
+                }
 
-        //         }
-
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
     const renderSuccessDelete = (
@@ -147,10 +140,12 @@ function Users() {
     const [loadingLoader, setLoadingLoader] = useState(true)
 
     const getAllData = () => {
+      
         axios.get(`${url}api/admin/get-all`)
             .then((response) => {
                 console.log(response.data)
                 const users = response.data;
+               
                 setUser(users);
             })
             .catch(error => console.error(`Error:${error}`));

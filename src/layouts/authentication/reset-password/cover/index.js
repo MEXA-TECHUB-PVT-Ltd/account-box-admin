@@ -1,120 +1,106 @@
-// @mui material components
 import url from "url/url";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import React, { useState } from "react"
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { useNavigate } from 'react-router-dom';
 import MDSnackbar from "components/MDSnackbar";
-// Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/curve.png";
-import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 function Cover() {
   const navigate = useNavigate();
-
   const headers = {
     'Content-Type': 'application/json'
   }
+  // States
   const [loading, setLoading] = useState(false)
   const [loadingPassword, setLoadingpassword] = useState(false)
   const [loading1, setLoading1] = useState(true)
-
   const [email, setEmail] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [errorSB, setErrorSB] = useState(false);
   const [errorSBEmpty, setErrorSBEmpty] = useState(false);
-
   const [errorSBOTP, setErrorSBOTP] = useState(false);
   const [infoSB, setInfoSB] = useState(false);
   const [infoUpdate, setInfoUpdate] = useState(false);
-  const [adminId, setAdminId] = useState('');
   const [errorUpdate, setErrorUpdate] = useState(false);
   const [otpCodeAdmin, setOtpCodeAdmin] = useState('');
   const [AdminEmail, setAdminEmail] = useState('');
   const [AdminIDLogin, setAdminIDLogin] = useState('');
+  const [errorlengthSBPass, setErrorlengthSBPass] = useState(false);
 
-
-
-
+  const closeErrorlengthSBPass = () => setErrorlengthSBPass(false);
   const closeInfoSB = () => setInfoSB(false);
   const closeInfoUpdate = () => setInfoUpdate(false);
   const closeErrorSB = () => setErrorSB(false);
   const closeErrorSBEmpty = () => setErrorSBEmpty(false);
-
   const closeErrorUpdate = () => setErrorUpdate(false);
   const closeErrorSBOTP = () => setErrorSBOTP(false);
-
+// Send Email Otp 
   const sendEmailOtp = () => {
-    setLoading(true)
-    setLoading1(false)
-    setLoadingpassword(false)
-    // axios.post(`${url}api/admin/forgetPassword`, {
-    //   email: email,
-    // }, { headers }).then(response => {
-    //   console.log(response)
-    //   if (response.data.message === "Email Id not Exist") {
-    //     setErrorSB(true)
-    //   } else {
-    //     setLoading(true)
-    //     setLoading1(false)
-    //     setLoadingpassword(false)
-    //     setOtpCodeAdmin(response.data.otp)
-    //     setAdminEmail(response.data.data.email)
-    //     setAdminIDLogin(response.data.data._id)
-    //   }
+    axios.post(`${url}api/admin/forget-password`, {
+      email: email,
+    }, { headers }).then(response => {
+      console.log(response)
+      if (response.data.message === "Email Id not Exist") {
+        setErrorSB(true)
+      } else {
+        setLoading(true)
+        setLoading1(false)
+        setLoadingpassword(false)
+        setOtpCodeAdmin(response.data.otp)
+        setAdminEmail(response.data.data.email)
+        setAdminIDLogin(response.data.data._id)
+      }
 
-    // })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
+    })
+      .catch(err => {
+        console.log(err)
+      })
   }
-  const [errorlengthSBPass, setErrorlengthSBPass] = useState(false);
-  const closeErrorlengthSBPass = () => setErrorlengthSBPass(false);
 
+// Update Password 
   const UpdatePassword = () => {
     if (email === "" || newPassword === "") {
       setErrorSBEmpty(true)
     } else if (newPassword.length < 6) {
       setErrorlengthSBPass(true)
     } else {
-      navigate('/authentication/sign-in');
-      // axios.put(`${url}api/admin/updateadmin`, {
-      //   email: AdminEmail,
-      //   password: newPassword,
-      //   _id: AdminIDLogin,
-      // }, { headers }).then(response => {
-      //   console.log(response);
-      //   if (response.data === '') {
-      //     setErrorUpdate(true)
-         
-      //   } else {
-      //     setInfoUpdate(true)
-      //     setTimeout(() => {
-      //       navigate('/authentication/sign-in');
-      //     }, 3000)
-      //   }
-      // })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
+      // navigate('/authentication/sign-in');
+      axios.put(`${url}api/admin/update-credentials`, {
+        email: AdminEmail,
+        password: newPassword,
+        _id: AdminIDLogin,
+      }, { headers }).then(response => {
+        console.log(response);
+        if (response.data === '') {
+          setErrorUpdate(true)
+        } else {
+          setInfoUpdate(true)
+          setTimeout(() => {
+            navigate('/authentication/sign-in');
+          }, 3000)
+        }
+      })
+        .catch(err => {
+          console.log(err)
+        })
     }
 
   }
+  // Notifications 
   const renderErrorLengthSBPass = (
     <MDSnackbar
       color="error"
       icon="warning"
       title="Error Message"
       content="Password should be atleast 6 characters long"
-      // dateTime="11 mins ago"
       open={errorlengthSBPass}
       onClose={closeErrorlengthSBPass}
       close={closeErrorlengthSBPass}
@@ -124,40 +110,17 @@ function Cover() {
   const sendVerifyOtp = () => {
     console.log(otpCodeAdmin)
     console.log(otpCode)
-    setLoading1(false)
-    setLoading(false)
-          setLoadingpassword(true)
-    // if (otpCodeAdmin==otpCode) {
-    //   console.log('verified')
-    //   setLoading(false)
-    //       // setAdminId();
-    //       // setEmail(response.data.data.email);
-    //       setInfoSB(true)
-    //       setLoading1(false)
-    //       setLoadingpassword(true)
-    // } else {
-    //   console.log('notr sdfb')
-    //   setErrorSBOTP(true)
-    // }
-    // axios.post(`${url}api/forgetPassword/verifyOTP`, {
-    //   userEmailAddress: email,
-    //   userEnteredOtp: otpCode
-    // }, { headers }).then(response => {
-    //   console.log(response.data)
-    //   if (response.data.message === "user found , OTP successfully matched") {
-    //     setLoading(false)
-    //     setAdminId(response.data.data.userId);
-    //     setEmail(response.data.data.email);
-    //     setInfoSB(true)
-    //     setLoading1(false)
-    //     setLoadingpassword(true)
-    //   } else {
-    //     setErrorSBOTP(true)
-    //   }
-    // })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
+    if (otpCodeAdmin == otpCode) {
+      console.log('verified')
+      setLoading(false)
+      setInfoSB(true)
+      setLoading1(false)
+      setLoadingpassword(true)
+
+    } else {
+      console.log('notr sdfb')
+      setErrorSBOTP(true)
+    }
 
   }
   const renderErrorSBEmpty = (
@@ -166,7 +129,6 @@ function Cover() {
       icon="warning"
       title="Error Message"
       content="Please Fill All Fields"
-      // dateTime="11 mins ago"
       open={errorSBEmpty}
       onClose={closeErrorSBEmpty}
       close={closeErrorSBEmpty}
@@ -180,7 +142,6 @@ function Cover() {
       icon="warning"
       title="Error Message"
       content="Please Enter Valid Email Address"
-      // dateTime="11 mins ago"
       open={errorSB}
       onClose={closeErrorSB}
       close={closeErrorSB}
@@ -193,7 +154,6 @@ function Cover() {
       icon="warning"
       title="Error Message"
       content="There is some error in updating password"
-      // dateTime="11 mins ago"
       open={errorUpdate}
       onClose={closeErrorUpdate}
       close={closeErrorUpdate}
@@ -206,7 +166,6 @@ function Cover() {
       icon="warning"
       title="Error Message"
       content="Invalid OTP, OTP doesnot matched"
-      // dateTime="11 mins ago"
       open={errorSBOTP}
       onClose={closeErrorSBOTP}
       close={closeErrorSBOTP}
@@ -262,7 +221,7 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={4}>
-              <MDTypography display="block" variant="button" color="black" my={1}>
+              <MDTypography display="block" variant="button" color="dark" my={1}>
                 Enter Valid Email to verify
               </MDTypography>
               <MDInput style={{ marginBottom: '10px' }} value={email}

@@ -1,40 +1,31 @@
-// react-router-dom components
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import Input from '@mui/material/Input';
-// @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-// Material Dashboard 2 React components
 import OutlinedInput from '@mui/material/OutlinedInput';
 import EmailIcon from '@mui/icons-material/Email';
-// Material Dashboard 2 React components
 import '../sign-in/style.css'
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import axios from "axios";
 import url from "url/url";
 import MDSnackbar from "components/MDSnackbar";
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-// Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-
 // Images
 import bgImage from "assets/images/curve.png";
-import CoverLayout from "../components/CoverLayout";
 
 function Cover() {
+  // Password Visibility 
   const [values, setValues] = React.useState({
     password: '',
-  
+
   });
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -58,43 +49,43 @@ function Cover() {
   const [errorSB, setErrorSB] = useState(false);
   const [errorSBPass, setErrorSBPass] = useState(false);
   const [errorlengthSBPass, setErrorlengthSBPass] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const closeErrorlengthSBPass = () => setErrorlengthSBPass(false);
-
   const closeErrorSB = () => setErrorSB(false);
   const closeErrorSBPass = () => setErrorSBPass(false);
-
-  const [name,setName]=useState('')
-  const [email,setEmail]=useState('')
-  const [password,setPassword]=useState('')
+// Create Admin 
   const submitHandler = () => {
-    if(email===""||password===""){
+    if (email === "" || password === "") {
       setErrorSB(true)
-    }else if(password.length<6){
+    } else if (password.length < 6) {
       setErrorSBPass(true)
-    }else{
-      navigate('/authentication/sign-in');
-      // axios.post(`${url}api/admin/createadmin`, {
-      //   email:email,
-      //   password: password,
-      // }, { headers }).then(response => {
-      //   console.log(response)
-      //   navigate('/authentication/sign-in');
-      // })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
+    } else {
+      axios.post(`${url}api/admin/create`, {
+        email: email,
+        password: password,
+      }, { headers }).then(response => {
+        console.log(response)
+        if (response.data.data.message === "Created Successfully") {
+          navigate('/authentication/sign-in');
+        } else {
+          setErrorlengthSBPass(true)
+        }
+      })
+        .catch(err => {
+          console.log(err)
+        })
     }
-     
 
   }
+  // Notifications 
   const renderErrorSB = (
     <MDSnackbar
       color="error"
       icon="warning"
       title="Error Message"
       content="Please Fill All Fields to continue"
-      // dateTime="11 mins ago"
       open={errorSB}
       onClose={closeErrorSB}
       close={closeErrorSB}
@@ -107,7 +98,6 @@ function Cover() {
       icon="warning"
       title="Error Message"
       content="Password should be atleast 6 characters long"
-      // dateTime="11 mins ago"
       open={errorSBPass}
       onClose={closeErrorSBPass}
       close={closeErrorSBPass}
@@ -119,8 +109,7 @@ function Cover() {
       color="error"
       icon="warning"
       title="Error Message"
-      content="Password should be atleast 6 characters long"
-      // dateTime="11 mins ago"
+      content="Email Already Exist"
       open={errorlengthSBPass}
       onClose={closeErrorlengthSBPass}
       close={closeErrorlengthSBPass}
@@ -148,7 +137,7 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-            <FormControl variant="outlined" style={{ width: '100%' }}>
+              <FormControl variant="outlined" style={{ width: '100%' }}>
                 <InputLabel >Email</InputLabel>
                 <OutlinedInput
                   // type={values.showPassword ? 'text' : 'password'}
@@ -160,7 +149,6 @@ function Cover() {
 
                         edge="end"
                       >
-
                         <EmailIcon style={{ color: 'grey' }} />
                       </IconButton>
                     </InputAdornment>
@@ -168,10 +156,9 @@ function Cover() {
                   label="Email"
                 />
               </FormControl>
-                           
             </MDBox>
             <MDBox mb={2}>
-            <FormControl variant="outlined" style={{ width: '100%' }}>
+              <FormControl variant="outlined" style={{ width: '100%' }}>
                 <InputLabel >Password</InputLabel>
                 <OutlinedInput
                   type={values.showPassword ? 'text' : 'password'}
@@ -193,29 +180,8 @@ function Cover() {
                 />
               </FormControl>
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
-            </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={()=>{submitHandler()}} color="error" fullWidth >
+              <MDButton variant="gradient" onClick={() => { submitHandler() }} color="error" fullWidth >
                 sign up
               </MDButton>
             </MDBox>
@@ -237,13 +203,14 @@ function Cover() {
           </MDBox>
         </MDBox>
         <div>
-        {renderErrorSB}
+          {renderErrorSB}
         </div>
         <div>
-        {renderErrorSBPass}
+          {renderErrorSBPass}
         </div>
-        <div>{renderErrorLengthSBPass}
-          </div>
+        <div>
+          {renderErrorLengthSBPass}
+        </div>
       </Card>
     </BasicLayout>
   );
