@@ -6,8 +6,8 @@ import SignUp from "layouts/authentication/sign-up";
 import Tycoon from "layouts/tycoons"
 import TycoonProfile from "layouts/tycoons/components/tycoonProfile"
 import Icon from "@mui/material/Icon";
-import Users from "layouts/users";
-import UsersProfile from "layouts/users/components/adminProfile"
+// import Users from "layouts/users";
+// import UsersProfile from "layouts/users/components/adminProfile"
 import SettingsData from "layouts/settings"
 import SubscriptionData from "layouts/subscriptions"
 import SubscriptionDataProfile from "layouts/subscriptions/components/subscriptionProfile"
@@ -23,20 +23,20 @@ const routes = [
     route: "/dashboard",
     component: <Dashboard />,
   },
-  {
-    type: "collapse",
-    name: "Admins",
-    key: "admins",
-    icon: <Icon fontSize="small">admin_panel_settings_icon</Icon>,
-    route: "/admins",
-    component: <Users />,
-  },
-  {
-    key: "adminProfile",
-    icon: <Icon fontSize="small">people_icon</Icon>,
-    route: "/adminProfile",
-    component: <UsersProfile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Admins",
+  //   key: "admins",
+  //   icon: <Icon fontSize="small">admin_panel_settings_icon</Icon>,
+  //   route: "/admins",
+  //   component: <Users />,
+  // },
+  // {
+  //   key: "adminProfile",
+  //   icon: <Icon fontSize="small">people_icon</Icon>,
+  //   route: "/adminProfile",
+  //   component: <UsersProfile />,
+  // },
   {
     type: "collapse",
     name: "Tycoons",

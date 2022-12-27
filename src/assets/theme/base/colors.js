@@ -102,8 +102,8 @@ const colors = {
 
   gradients: {
     primary: {
-      main: "#EC407A",
-      state: "#D81B60",
+      main: "#FF0000",
+      state: "#FF0000",
     },
 
     secondary: {

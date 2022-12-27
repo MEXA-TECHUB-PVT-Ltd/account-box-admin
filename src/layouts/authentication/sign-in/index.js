@@ -212,7 +212,7 @@ function Basic() {
                 Forget Password
               </MDTypography>
             </MDBox>
-            <MDBox mt={1} mb={1} textAlign="center">
+            {/* <MDBox mt={1} mb={1} textAlign="center">
 
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
@@ -227,7 +227,7 @@ function Basic() {
                   Sign up
                 </MDTypography>
               </MDTypography>
-            </MDBox>
+            </MDBox> */}
           </MDBox>
         </MDBox>
         <div>
