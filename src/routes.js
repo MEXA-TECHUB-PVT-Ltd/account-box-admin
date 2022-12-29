@@ -4,7 +4,9 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Tycoon from "layouts/tycoons"
-import TycoonProfile from "layouts/tycoons/components/tycoonProfile"
+import TycoonProfile from "layouts/tycoons/components/tycoonProfile" 
+import TycoonProfileEdit from "layouts/tycoons/components/tycoonProfileEdit" 
+
 import Icon from "@mui/material/Icon";
 // import Users from "layouts/users";
 // import UsersProfile from "layouts/users/components/adminProfile"
@@ -65,6 +67,12 @@ const routes = [
     icon: <Icon fontSize="small">hotel_icon</Icon>,
     route: "/tycoonProfile",
     component: <TycoonProfile />,
+  },
+  {
+    key: "editTycoon",
+    icon: <Icon fontSize="small">hotel_icon</Icon>,
+    route: "/editTycoon",
+    component: <TycoonProfileEdit/>,
   },
   {
     type: "collapse",

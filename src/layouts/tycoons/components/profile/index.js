@@ -100,19 +100,19 @@ function Profile({ idProfile }) {
       .then((response) => {
         console.log('Data Guests Hotel')
         console.log(response.data)
-        if(response.data.data.length===0){
-          const users= [
-            {
-              "created_at" : "00/00/00",
-              "img": "uploads\\\\1668840773857.jpg",
-               "name":"Shop Name Here"
-            }
-        ]
-          setDispacherDriver(users)
-        }else{
+        // if(response.data.data.length===0){
+        //   const users= [
+        //     {
+        //       "created_at" : "00/00/00",
+        //       "img": "uploads\\\\1668840773857.jpg",
+        //        "name":"Shop Name Here"
+        //     }
+        // ]
+        //   setDispacherDriver(users)
+        // }else{
           setDispacherDriver(response.data.data)
 
-        }
+        // }
        
       })
       .catch(error => console.error(`Error:${error}`));
@@ -180,7 +180,7 @@ function Profile({ idProfile }) {
               </AppBar>
               <TabPanel value={tabValue} index={0}>
                 <Grid container spacing={1}>
-                  <Grid item xs={12} md={4} sx={{ display: "flex" }}>
+                  <Grid item xs={12} md={6} sx={{ display: "flex" }}>
                     <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
                     <ProfileInfoCard
                       title="profile information"
@@ -213,7 +213,7 @@ function Profile({ idProfile }) {
                     />
                     <Divider orientation="vertical" sx={{ mx: 0 }} />
                   </Grid>
-                  <Grid item xs={12} md={4} sx={{ display: "flex" }}>
+                  <Grid item xs={12} md={6} sx={{ display: "flex" }}>
                     <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
                     <ProfileInfoCard
                       title="Subscription Details"
@@ -247,8 +247,8 @@ function Profile({ idProfile }) {
                     <Divider orientation="vertical" sx={{ mx: 0 }} />
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <ProfilesList title="Shops" idProfileUser={idProfile}
-                      shadow={true} />
+                    {/* <ProfilesList title="Shops" idProfileUser={idProfile}
+                      shadow={true} /> */}
                   </Grid>
                 </Grid>
               </TabPanel>

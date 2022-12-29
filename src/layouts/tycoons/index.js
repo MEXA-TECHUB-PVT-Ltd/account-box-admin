@@ -59,6 +59,8 @@ function Users() {
             }
         );
     }
+
+   
     // Delete 
     const [visibleDelete, setVisibleDelete] = useState(false)
     const deleteData = (idData) => {
@@ -286,7 +288,7 @@ function Users() {
                 <>
 
                     {row.status === 'unblock' ?
-                        <Tooltip title="Block Hotel">
+                        <Tooltip title="Block Tycoon">
 
                             <Icon fontSize="small" style={{ cursor: 'pointer', color: '#fea21e', marginRight: '5px' }} onClick={() => {
                                 BlockUser(row._id)
@@ -294,7 +296,7 @@ function Users() {
                         </Tooltip>
 
                         :
-                        <Tooltip title="Verify Hotel">
+                        <Tooltip title="Verify Tycoon">
 
                             <Icon fontSize="small" style={{ cursor: 'pointer', color: '#5db461', marginRight: '5px' }} onClick={() => {
                                 CheckUser(row._id)
@@ -397,23 +399,31 @@ function Users() {
     const [openEdit, setOpenEdit] = React.useState(false);
     const handleOpenEdit = (idData) => {
         console.log(idData)
-        axios.get(`${url}api/tycoon/get-tycoon-by-ID/${idData}`)
-            .then((response) => {
-                console.log('Data User Picddddd')
-                console.log(response)
-                if (response.data.data[0].profile_image === undefined) {
-                    console.log('empty image')
-                } else {
-                    setcompanyLogoEdit(response.data.data[0].profile_image)
+        console.log(idData)
+        navigate('/editTycoon',
+            {
+                state: {
+                    idDispacher: idData,
                 }
-                setIdDataEdit(response.data.data[0]._id)
-                setUserNameTycoonEdit(response.data.data[0].username)
-                setno_of_shops_createdTycoonEdit(response.data.data[0].no_of_shops_created)
-                setStatusTycoonEdit(response.data.data[0].status)
-                setOpenEdit(true);
+            }
+        );
+        // axios.get(`${url}api/tycoon/get-tycoon-by-ID/${idData}`)
+        //     .then((response) => {
+        //         console.log('Data User Picddddd')
+        //         console.log(response)
+        //         if (response.data.data[0].profile_image === undefined) {
+        //             console.log('empty image')
+        //         } else {
+        //             setcompanyLogoEdit(response.data.data[0].profile_image)
+        //         }
+        //         setIdDataEdit(response.data.data[0]._id)
+        //         setUserNameTycoonEdit(response.data.data[0].username)
+        //         setno_of_shops_createdTycoonEdit(response.data.data[0].no_of_shops_created)
+        //         setStatusTycoonEdit(response.data.data[0].status)
+        //         setOpenEdit(true);
 
-            })
-            .catch(error => console.error(`Error:${error}`));
+        //     })
+        //     .catch(error => console.error(`Error:${error}`));
     }
     const handleCloseEdit = () => setOpenEdit(false);
     const submitHandlerUpdate = () => {
@@ -577,7 +587,7 @@ function Users() {
                                                         </Typography>
                                                         <Grid container spacing={2}>
                                                             <Grid item xs={10} md={10}>
-                                                                <Typography id="transition-modal-title" variant="h5" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h5" component="h2" style={{fontWeight:'bolder',fontSize:'18px'}}>
                                                                     Edit Tycoon
                                                                 </Typography>
                                                             </Grid>
@@ -602,19 +612,20 @@ function Users() {
                                                                 </Badge>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     Name :
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
+                                                            {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
                                                                 <TextField
                                                                     value={userNameTycoonEdit}
                                                                     onChange={(e) => setUserNameTycoonEdit(e.target.value)}
-                                                                    style={{ width: '100%' }} variant="outlined" />
+                                                                    style={{ width: '100%'}}  variant="outlined" />
 
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     Status :
                                                                 </Typography>
                                                             </Grid>
@@ -636,20 +647,23 @@ function Users() {
                                                                 </Select>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     No of shops :
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
                                                                 <TextField type="number" value={no_of_shops_createdTycoonEdit}
                                                                     onChange={(e) => setno_of_shops_createdTycoonEdit(e.target.value)} style={{ width: '100%' }} variant="outlined" />
+                                                                    {/* <input type="text" id="fname" value={no_of_shops_createdTycoonEdit}
+                                                                    onChange={(e) => setno_of_shops_createdTycoonEdit(e.target.value)} 
+                                                                    style={{padding:'6px 10 7px',backgroundColor:'#f5f5dc',borderRadius:'5px',border:'1px solid grey'}}/> */}
 
                                                             </Grid>
                                                             <Grid item xs={12} md={4}>
 
                                                             </Grid>
                                                             <Grid item xs={12} md={4}>
-                                                                <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerUpdate() }}>
+                                                                <MDButton style={{ width: '100%',color:'white',borderRadius:'10px' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerUpdate() }}>
                                                                     Update
                                                                 </MDButton>
                                                             </Grid>
@@ -680,7 +694,7 @@ function Users() {
                                                         </Typography>
                                                         <Grid container spacing={2}>
                                                             <Grid item xs={10} md={10}>
-                                                                <Typography id="transition-modal-title" variant="h5" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h5" component="h2" style={{fontWeight:'bolder',fontSize:'18px'}}>
                                                                     Add Tycoon
                                                                 </Typography>
                                                             </Grid>
@@ -705,7 +719,7 @@ function Users() {
                                                                 </Badge>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     Name :
                                                                 </Typography>
                                                             </Grid>
@@ -717,7 +731,7 @@ function Users() {
 
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     Email :
                                                                 </Typography>
                                                             </Grid>
@@ -730,7 +744,7 @@ function Users() {
 
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     Password :
                                                                 </Typography>
                                                             </Grid>
@@ -740,7 +754,7 @@ function Users() {
 
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     Status :
                                                                 </Typography>
                                                             </Grid>
@@ -762,7 +776,7 @@ function Users() {
                                                                 </Select>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                <Typography id="transition-modal-title" variant="h6" component="h2" style={{fontSize:'16px'}}>
                                                                     No of shops :
                                                                 </Typography>
                                                             </Grid>
@@ -775,7 +789,7 @@ function Users() {
 
                                                             </Grid>
                                                             <Grid item xs={12} md={4}>
-                                                                <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler1() }}>
+                                                                <MDButton style={{ width: '100%',color:'white',borderRadius:'10px' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler1() }}>
                                                                     Submit
                                                                 </MDButton>
                                                             </Grid>

@@ -73,6 +73,7 @@ function Dashboard() {
         setcompanyLogo(response.data.data[0].img)
         console.log(response.data.data[0].img)
         setPassword(response.data.data[0].password)
+        
       })
       .catch(error => console.error(`Error:${error}`));
   }
@@ -135,11 +136,12 @@ function Dashboard() {
     if (TermsAndConditionsA === "" || PrivacyPolicy === "") {
       setErrorSB(true)
     } else {
+      console.log(password)
       axios.put(`${url}api/admin/update-credentials`, {
         _id: items,
         terms_and_conditions: TermsAndConditionsA,
         privacy_policy: PrivacyPolicy,
-        password: password,
+        // password: password,
       }, { headers }).then(response => {
         console.log(response);
         setSuccessDelete(true)
