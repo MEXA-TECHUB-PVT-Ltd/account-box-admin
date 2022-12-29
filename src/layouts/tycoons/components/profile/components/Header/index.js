@@ -22,10 +22,10 @@ function Header({ children, idProfileUser }) {
         console.log(response.data.data[0])
         setTypeId(response.data.data[0].username)
         setUserName(response.data.data[0].email)
-        if (response.data.data[0].img === undefined) {
+        if (response.data.data[0].profile_image === undefined) {
           setImageUser(backgroundImage)
         } else {
-          const urlImage = response.data.data[0].img
+          const urlImage = response.data.data[0].profile_image
           console.log(urlImage)
           setImageUser(urlImage)
         }
