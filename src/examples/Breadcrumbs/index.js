@@ -41,7 +41,7 @@ function Breadcrumbs({ icon, title, route, light }) {
               component="span"
               variant="button"
               fontWeight="regular"
-              textTransform="capitalize"
+              textTransform="uppercase"
               color={light ? "white" : "dark"}
               opacity={light ? 0.8 : 0.5}
               sx={{ lineHeight: 0 }}
@@ -53,7 +53,7 @@ function Breadcrumbs({ icon, title, route, light }) {
         <MDTypography
           variant="button"
           fontWeight="regular"
-          textTransform="capitalize"
+          textTransform="uppercase"
           color={light ? "white" : "dark"}
           sx={{ lineHeight: 0 }}
         >
@@ -62,7 +62,7 @@ function Breadcrumbs({ icon, title, route, light }) {
       </MuiBreadcrumbs>
       <MDTypography
         fontWeight="bold"
-        textTransform="capitalize"
+        textTransform="uppercase"
         variant="h6"
         color={light ? "white" : "dark"}
         noWrap

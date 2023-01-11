@@ -4,6 +4,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useLocation } from 'react-router-dom';
 import DotLoader from "react-spinners/DotLoader";
+import Card from "@mui/material/Card";
 import Profile from "layouts/tycoons/components/profile";
 import axios from "axios";
 import url from "url/url";
@@ -21,6 +22,8 @@ import Icon from "@mui/material/Icon";
 import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import MDSnackbar from "components/MDSnackbar";
+
 
 const style = {
     position: 'absolute',
@@ -44,7 +47,6 @@ function DispachersProfile() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
-    const closeSuccessSBVV = () => setSuccessSBVV(false);
     const [successSBVV, setSuccessSBVV] = useState(false);
     const [SuccessSBVVEdit, setSuccessSBVVEdit] = useState(false);
     const headers = {
@@ -99,6 +101,34 @@ function DispachersProfile() {
             })
     }
     // const handleCloseEdit = () => setOpenEdit(false);
+    const closeSuccessSBV = () => setSuccessSBVVEdit(false);
+    const closeSuccessSBVV = () => setSuccessSBVV(false);
+
+
+    const renderSuccessSbVerify = (
+        <MDSnackbar
+            icon="notifications"
+            title="Tycoon Updated Successfully"
+            content="This is a notification message"
+            open={SuccessSBVVEdit}
+            onClose={closeSuccessSBV}
+            close={closeSuccessSBV}
+            color="success"
+            bgWhite
+        />
+    );
+    const renderSuccessSbEmpty = (
+        <MDSnackbar
+            icon="notifications"
+            title="Please Fill All fields"
+            content="This is a notification message"
+            open={successSBVV}
+            onClose={closeSuccessSBVV}
+            close={closeSuccessSBVV}
+            color="error"
+            bgWhite
+        />
+    );
     const submitHandlerUpdate = () => {
         if (userNameTycoonEdit === '' || statusTycoonEdit === '' || no_of_shops_createdTycoonEdit === '') {
             // setOpenEdit(false)
@@ -133,9 +163,9 @@ function DispachersProfile() {
     }
     const backTotycoon = () => {
         navigate('/tycoons')
-      
+
     }
-    
+
     useEffect(() => {
         getAllData();
 
@@ -168,105 +198,110 @@ function DispachersProfile() {
                 </Grid>
                 :
                 <>
-                  <Grid container spacing={1}>
-                  <Grid item xs={12} md={6} sx={{ display: "flex" }}>
-                  <Box >
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} md={3} sx={{ display: "flex" }}>
+                        </Grid>
+                        <Grid item xs={12} md={6} sx={{ display: "flex" }}>
+                            <Card sx={{ padding: "30px" }}>
+                                <Box >
 
-{/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-</Typography> */}
-<Grid container spacing={2}>
-    {/* <Grid item xs={10} md={10}>
-        <Typography id="transition-modal-title" variant="h5" component="h2" style={{ fontWeight: 'bolder', fontSize: '18px' }}>
-            Edit Tycoon
-        </Typography>
-    </Grid> */}
-    {/* <Grid item xs={1} md={1}>
-        <CloseIcon onClick={handleCloseEdit} style={{ cursor: 'pointer' }} />
 
-    </Grid> */}
-    <Grid align="center" item xs={12} md={12}>
-        <Badge color="secondary" sx={{ cursor: "pointer" }} onClick={handleClick} overlap="circular" badgeContent={
-            <>
-                <Icon fontSize="small" >
-                    edit
-                </Icon>
-                <input type="file" name="image" placeholder="image" style={{ display: 'none' }}
-                    ref={inputRef}
-                    onChange={(e) => onFileChange1(e.target.files[0])} />
-            </>} >
-            <Avatar src={`${url}${companyLogoEdit}`} sx={{ width: "200px", height: "200px", border: '1px solid white', marginBottom: '10px' }} />
+                                    <Grid container spacing={2}>
 
-        </Badge>
-    </Grid>
-    <Grid item xs={6} md={6}>
-        <Typography id="transition-modal-title" variant="h6" component="h2" style={{ fontSize: '16px' }}>
-            Name :
-        </Typography>
-    </Grid>
-    <Grid item xs={6} md={6}>
-        {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
-        <TextField
-            value={userNameTycoonEdit}
-            onChange={(e) => setUserNameTycoonEdit(e.target.value)}
-            style={{ width: '100%' }} variant="outlined" />
+                                        <Grid align="center" item xs={12} md={12}>
+                                            <Badge color="secondary" sx={{ cursor: "pointer" }} onClick={handleClick} overlap="circular" badgeContent={
+                                                <>
+                                                    <Icon fontSize="small" >
+                                                        edit
+                                                    </Icon>
+                                                    <input type="file" name="image" placeholder="image" style={{ display: 'none' }}
+                                                        ref={inputRef}
+                                                        onChange={(e) => onFileChange1(e.target.files[0])} />
+                                                </>} >
+                                                <Avatar src={`${url}${companyLogoEdit}`} sx={{ width: "200px", height: "200px", border: '1px solid white', marginBottom: '10px' }} />
 
-    </Grid>
-    <Grid item xs={6} md={6}>
-        <Typography id="transition-modal-title" variant="h6" component="h2" style={{ fontSize: '16px' }}>
-            Status :
-        </Typography>
-    </Grid>
-    <Grid item xs={6} md={6}>
+                                            </Badge>
+                                        </Grid>
+                                        <Grid item xs={6} md={6}>
+                                            <Typography id="transition-modal-title" variant="h6" component="h2" style={{ fontSize: '16px' }}>
+                                                Name :
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6} md={6}>
+                                            {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
+                                            <TextField
+                                                value={userNameTycoonEdit}
+                                                onChange={(e) => setUserNameTycoonEdit(e.target.value)}
+                                                style={{ width: '100%' }} variant="outlined" />
 
-        <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            style={{ width: '100%', height: '30px' }}
-            value={statusTycoonEdit}
-            onChange={(e) => setStatusTycoonEdit(e.target.value)}
-        >
-            <MenuItem
-                style={{ display: 'flex', flexDirection: 'column' }}
-                value="block">Block</MenuItem>
-            <MenuItem
-                style={{ display: 'flex', flexDirection: 'column' }}
-                value="unblock">Unblock</MenuItem>
-        </Select>
-    </Grid>
-    <Grid item xs={6} md={6}>
-        <Typography id="transition-modal-title" variant="h6" component="h2" style={{ fontSize: '16px' }}>
-            No of shops :
-        </Typography>
-    </Grid>
-    <Grid item xs={6} md={6}>
-        <TextField type="number" value={no_of_shops_createdTycoonEdit}
-            onChange={(e) => setno_of_shops_createdTycoonEdit(e.target.value)} style={{ width: '100%' }} variant="outlined" />
-        {/* <input type="text" id="fname" value={no_of_shops_createdTycoonEdit}
+                                        </Grid>
+                                        <Grid item xs={6} md={6}>
+                                            <Typography id="transition-modal-title" variant="h6" component="h2" style={{ fontSize: '16px' }}>
+                                                Status :
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6} md={6}>
+
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                style={{ width: '100%', height: '30px' }}
+                                                value={statusTycoonEdit}
+                                                onChange={(e) => setStatusTycoonEdit(e.target.value)}
+                                            >
+                                                <MenuItem
+                                                    style={{ display: 'flex', flexDirection: 'column' }}
+                                                    value="block">Block</MenuItem>
+                                                <MenuItem
+                                                    style={{ display: 'flex', flexDirection: 'column' }}
+                                                    value="unblock">Unblock</MenuItem>
+                                            </Select>
+                                        </Grid>
+                                        <Grid item xs={6} md={6}>
+                                            <Typography id="transition-modal-title" variant="h6" component="h2" style={{ fontSize: '16px' }}>
+                                                No of shops :
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6} md={6}>
+                                            <TextField type="number" value={no_of_shops_createdTycoonEdit}
+                                                onChange={(e) => setno_of_shops_createdTycoonEdit(e.target.value)} style={{ width: '100%' }} variant="outlined" />
+                                            {/* <input type="text" id="fname" value={no_of_shops_createdTycoonEdit}
                                             onChange={(e) => setno_of_shops_createdTycoonEdit(e.target.value)} 
                                             style={{padding:'6px 10 7px',backgroundColor:'#f5f5dc',borderRadius:'5px',border:'1px solid grey'}}/> */}
 
-    </Grid>
-    <Grid item xs={12} md={4}>
-    <MDButton style={{ width: '100%', color: 'white', borderRadius: '10px' }} variant="gradient" color="error" fullWidth onClick={() => { backTotycoon() }}>
-            Back
-        </MDButton>
-    </Grid>
-    <Grid item xs={12} md={4}>
-        
-    </Grid>
-    <Grid item xs={12} md={4}>
-    <MDButton style={{ width: '100%', color: 'white', borderRadius: '10px' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerUpdate() }}>
-            Update
-        </MDButton>
-    </Grid>
-</Grid>
-</Box>
-                  </Grid>
-                  </Grid>
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+                                            <MDButton style={{ width: '100%', color: 'white', borderRadius: '10px' }} variant="gradient" color="error" fullWidth onClick={() => { backTotycoon() }}>
+                                                Back
+                                            </MDButton>
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+                                            <MDButton style={{ width: '100%', color: 'white', borderRadius: '10px' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerUpdate() }}>
+                                                Update
+                                            </MDButton>
+                                        </Grid>
+
+                                    </Grid>
+                                </Box>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12} md={3} sx={{ display: "flex" }}>
+                        </Grid>
+                    </Grid>
+                    <div>
+                        {renderSuccessSbVerify}
+
+                    </div>
+                    <div>
+                        {renderSuccessSbEmpty}
+                    </div>
                     {/* <Profile idProfile={state.idDispacher} /> */}
                     {/* <Profile idProfile={state.idDispacher}/> */}
                     {/* <h1>hello {state.idDispacher}</h1> */}
-                  
+
 
                 </>
             }

@@ -38,6 +38,8 @@ function Dashboard() {
 
 
   const [TycoonAll, setTycoonAll] = useState('');
+  const [TycoonData, setTycoonData] = useState([]);
+
   const [SubscriptionsData, setSubscriptionsData] = useState('');
   const [ShopsData, setShopsData] = useState('');
   const getAllData = () => {
@@ -45,7 +47,13 @@ function Dashboard() {
       .then((response) => {
         console.log(response.data.length)
         const TycoonAll = response.data.length;
-        // console.log(TycoonAll)
+        console.log(response.data)
+        // const tycoonDD=[];
+        if(response.data.length===0){
+
+        }
+        setTycoonData(response.data)
+
         setTycoonAll(TycoonAll);
       })
       .catch(error => console.error(`Error:${error}`));
@@ -163,12 +171,17 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="error"
-                  title=" Details"
+                  title="graph for tycoons added in system via weeks, months, years. "
                   description="Data Representation"
                   date="just updated"
                   chart={{
-                    labels: ["Subscriptions", "Shops", "Tycoons","Managers","Products","Cashiers"],
-                    datasets: { label: "Progress", data: [SubscriptionsData, ShopsData, TycoonAll,ManagersData,ProductsData,CashiersData] },
+                    // labels: ["Subscriptions", "Shops", "Tycoons","Managers","Products","Cashiers"],
+                   
+                    labels: TycoonData.map((row)=>row.created_at),
+                    datasets: { label: "Progress",
+                     data: TycoonData.map((o) => parseFloat(o.no_of_shops_created)) },
+
+                    // data: [SubscriptionsData, ShopsData, TycoonAll,ManagersData,ProductsData,CashiersData] },
                   }}
                 />
               </MDBox>
@@ -177,12 +190,16 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="Details"
+                  title="graph for tycoons added in system via weeks, months, years. "
                   description="Data Representation"
                   date="just updated"
                   chart={{
-                    labels: ["Subscriptions", "Shops", "Tycoons","Managers","Products","Cashiers"],
-                    datasets: { label: "Progress", data: [SubscriptionsData, ShopsData, TycoonAll,ManagersData,ProductsData,CashiersData] },
+                    // labels: ["Subscriptions", "Shops", "Tycoons","Managers","Products","Cashiers"],
+                    // datasets: { label: "Progress", data: [SubscriptionsData, ShopsData, TycoonAll,ManagersData,ProductsData,CashiersData] },
+                    labels: TycoonData.map((row)=>row.created_at),
+                    datasets: { label: "Progress",
+                     data: TycoonData.map((o) => parseFloat(o.no_of_shops_created)) },
+
                   }}
                 />
               </MDBox>

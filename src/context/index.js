@@ -57,7 +57,7 @@ function MaterialUIControllerProvider({ children }) {
     sidenavColor: "error",
     transparentNavbar: true,
     fixedNavbar: true,
-    openConfigurator: false,
+    openConfigurator: true,
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
