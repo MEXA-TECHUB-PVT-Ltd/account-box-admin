@@ -56,16 +56,32 @@ function Profile({ idProfile }) {
       .then((response) => {
         console.log('Data User Subscription History')
         console.log(response)
-      
-        setTycoonName(response.data.data[0].tycoon_id.username)
-        setTycoonEmail(response.data.data[0].tycoon_id.email)
-        setTycoonShopS(response.data.data[0].tycoon_id.no_of_shops_created)
-        setTycoonCreated(response.data.data[0].tycoon_id.created_at)
-        setSubscriptionPlanName(response.data.data[0].subscription_plans_id.name)
-        setNoofShops(response.data.data[0].subscription_plans_id.no_of_shops)
-        setPricePerMonth(response.data.data[0].subscription_plans_id.price_per_month)
+        if (response.data.data[0].tycoon_id === undefined || response.data.data[0].tycoon_id === null) {
+          setTycoonName('NULL')
+          setTycoonEmail('NULL')
+          setTycoonShopS('NULL')
+          setTycoonCreated('NULL')
+        } else {
+          setTycoonName(response.data.data[0].tycoon_id.username)
+          setTycoonEmail(response.data.data[0].tycoon_id.email)
+          setTycoonShopS(response.data.data[0].tycoon_id.no_of_shops_created)
+          setTycoonCreated(response.data.data[0].tycoon_id.created_at)
+        }
+        if (response.data.data[0].subscription_plans_id === undefined || response.data.data[0].subscription_plans_id === null) {
+          setSubscriptionPlanName('NULL')
+          setNoofShops('NULL')
+          setPricePerMonth('NULL')
+          setstartDate('NULL')
+          setEndDate('NULL')
+        } else {
+          setSubscriptionPlanName(response.data.data[0].subscription_plans_id.name)
+          setNoofShops(response.data.data[0].subscription_plans_id.no_of_shops)
+          setPricePerMonth(response.data.data[0].subscription_plans_id.price_per_month)
           setstartDate(response.data.data[0].start_date)
           setEndDate(response.data.data[0].end_date)
+        }
+
+
 
       })
       .catch(error => console.error(`Error:${error}`));
@@ -95,75 +111,75 @@ function Profile({ idProfile }) {
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={12} sx={{ ml: "auto" }}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} md={4} sx={{ display: "flex" }}>
-                    <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-                    <ProfileInfoCard
-                      title="profile information"
-                      info={{
-                        Username: TycoonName,
-                        Email: TycoonEmail,
-                        noOfShopsCreated: TycoonShopS,
-                        createdAt: TycoonCreated,
-                      }}
-                      social={[
-                        {
-                          link: "https://www.facebook.com/CreativeTim/",
-                          icon: <FacebookIcon />,
-                          color: "facebook",
-                        },
-                        {
-                          link: "https://twitter.com/creativetim",
-                          icon: <TwitterIcon />,
-                          color: "twitter",
-                        },
-                        {
-                          link: "https://www.instagram.com/creativetimofficial/",
-                          icon: <InstagramIcon />,
-                          color: "instagram",
-                        },
-                      ]}
-                      action={{ route: "", tooltip: "Edit Profile" }}
-                      shadow={false}
-                    />
-                    <Divider orientation="vertical" sx={{ mx: 0 }} />
-                  </Grid>
-                  <Grid item xs={12} md={4} sx={{ display: "flex" }}>
-                    <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-                    <ProfileInfoCard
-                      title="Subscription Details"
-                      info={{
-                        name: SubscriptionPlanName,
-                        noOfShops: NoofShops,
-                        pricePerMonth: PricePerMonth,
-                        EndDate: EndDate,
-                        startDate: startDate,
-                      }}
-                      social={[
-                        {
-                          link: "https://www.facebook.com/CreativeTim/",
-                          icon: <FacebookIcon />,
-                          color: "facebook",
-                        },
-                        {
-                          link: "https://twitter.com/creativetim",
-                          icon: <TwitterIcon />,
-                          color: "twitter",
-                        },
-                        {
-                          link: "https://www.instagram.com/creativetimofficial/",
-                          icon: <InstagramIcon />,
-                          color: "instagram",
-                        },
-                      ]}
-                      action={{ route: "", tooltip: "Edit Profile" }}
-                      shadow={false}
-                    />
-                    <Divider orientation="vertical" sx={{ mx: 0 }} />
-                  </Grid>
-                 
+              <Grid container spacing={1}>
+                <Grid item xs={12} md={4} sx={{ display: "flex" }}>
+                  <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
+                  <ProfileInfoCard
+                    title="profile information"
+                    info={{
+                      Username: TycoonName,
+                      Email: TycoonEmail,
+                      noOfShopsCreated: TycoonShopS,
+                      createdAt: TycoonCreated,
+                    }}
+                    social={[
+                      {
+                        link: "https://www.facebook.com/CreativeTim/",
+                        icon: <FacebookIcon />,
+                        color: "facebook",
+                      },
+                      {
+                        link: "https://twitter.com/creativetim",
+                        icon: <TwitterIcon />,
+                        color: "twitter",
+                      },
+                      {
+                        link: "https://www.instagram.com/creativetimofficial/",
+                        icon: <InstagramIcon />,
+                        color: "instagram",
+                      },
+                    ]}
+                    action={{ route: "", tooltip: "Edit Profile" }}
+                    shadow={false}
+                  />
+                  <Divider orientation="vertical" sx={{ mx: 0 }} />
                 </Grid>
-          
+                <Grid item xs={12} md={4} sx={{ display: "flex" }}>
+                  <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
+                  <ProfileInfoCard
+                    title="Subscription Details"
+                    info={{
+                      name: SubscriptionPlanName,
+                      noOfShops: NoofShops,
+                      pricePerMonth: PricePerMonth,
+                      EndDate: EndDate,
+                      startDate: startDate,
+                    }}
+                    social={[
+                      {
+                        link: "https://www.facebook.com/CreativeTim/",
+                        icon: <FacebookIcon />,
+                        color: "facebook",
+                      },
+                      {
+                        link: "https://twitter.com/creativetim",
+                        icon: <TwitterIcon />,
+                        color: "twitter",
+                      },
+                      {
+                        link: "https://www.instagram.com/creativetimofficial/",
+                        icon: <InstagramIcon />,
+                        color: "instagram",
+                      },
+                    ]}
+                    action={{ route: "", tooltip: "Edit Profile" }}
+                    shadow={false}
+                  />
+                  <Divider orientation="vertical" sx={{ mx: 0 }} />
+                </Grid>
+
+              </Grid>
+
 
 
             </Grid>

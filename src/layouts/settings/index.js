@@ -24,7 +24,13 @@ import { Person } from "@mui/icons-material";
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Icon from "@mui/material/Icon";
+import ClipLoader from "react-spinners/ClipLoader";
 
+const color = "black"
+const override = {
+  display: ' block',
+  margin: '0 auto',
+}
 function Dashboard() {
   const [items, setItems] = useState([]);
 
@@ -43,6 +49,10 @@ function Dashboard() {
   const [Username, setUsername] = useState('')
   const [TermsAndConditionsA, setTermsAndConditionsA] = useState('')
   const [PrivacyPolicy, setPrivacyPolicy] = useState('')
+  const [loading2, setLoading2] = useState(false)
+  const [loading3, setLoading3] = useState(false)
+
+
 
   const [password, setPassword] = useState('')
   const renderSuccessDelete = (
@@ -73,7 +83,7 @@ function Dashboard() {
         setcompanyLogo(response.data.data[0].img)
         console.log(response.data.data[0].img)
         setPassword(response.data.data[0].password)
-        
+
       })
       .catch(error => console.error(`Error:${error}`));
   }
@@ -111,11 +121,21 @@ function Dashboard() {
   const closeErrorlengthSBPass = () => setErrorlengthSBPass(false);
   const submitHandlerAdminUpdate = () => {
     if (email === "" || password === "" || Username === "") {
+      setLoading2(true)
+      setTimeout(() => {
       setErrorSB(true)
+      setLoading2(false)
+    }, 1000)
     } else if (password.length < 6) {
+      setLoading2(true)
+      setTimeout(() => {
       console.log('error')
       setErrorlengthSBPass(true)
+      setLoading2(false)
+    }, 1000)
     } else {
+      setLoading2(true)
+      setTimeout(() => {
       axios.put(`${url}api/admin/update-credentials`, {
         _id: items,
         img: companyLogo,
@@ -130,12 +150,20 @@ function Dashboard() {
           console.log(err)
           setErrorSBPass(true)
         })
+        setLoading2(false)
+    }, 1000)
     }
   }
   const submitHandler3 = () => {
     if (TermsAndConditionsA === "" || PrivacyPolicy === "") {
+      setLoading3(true)
+      setTimeout(() => {
       setErrorSB(true)
+      setLoading3(false)
+    }, 1000)
     } else {
+      setLoading3(true)
+      setTimeout(() => {
       console.log(password)
       axios.put(`${url}api/admin/update-credentials`, {
         _id: items,
@@ -150,6 +178,8 @@ function Dashboard() {
           console.log(err)
           setErrorSBPass(true)
         })
+        setLoading3(false)
+      }, 1000)
     }
   }
   const renderErrorSB = (
@@ -298,9 +328,22 @@ function Dashboard() {
                     label="Password"
                   />
                 </FormControl>
-                <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerAdminUpdate() }}>
-                  Update
-                </MDButton>
+                {loading2 ?
+
+                  <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                    <ClipLoader color={color} loading={loading2}
+                      css={override}
+                      size={10}
+                    />
+                  </MDButton>
+
+
+
+                  :
+                  <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerAdminUpdate() }}>
+                    Update
+                  </MDButton>
+                }
               </CardContent>
             </Card>
           </Grid>
@@ -340,9 +383,22 @@ function Dashboard() {
                     />
                   </Grid>
                 </Grid>
-                <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler3() }}>
-                  Update
-                </MDButton>
+                {loading3 ?
+
+                  <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                    <ClipLoader color={color} loading={loading3}
+                      css={override}
+                      size={10}
+                    />
+                  </MDButton>
+
+
+
+                  :
+                  <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler3() }}>
+                    Update
+                  </MDButton>
+                }
               </CardContent>
             </Card>
           </Grid>

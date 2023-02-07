@@ -18,16 +18,21 @@ function Header({ children, idProfileUser }) {
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
   const getAllData = () => {
-    axios.get(`${url}api/hotel/specificHotel/${idProfileUser}`)
+    axios.get(`${url}api/subscription_history/get-subscription-history-by-ID/${idProfileUser}`)
       .then((response) => {
         console.log('Data User Header')
         console.log(response.data[0])
-        setTypeId(response.data[0].hotel_type_id.name)
-        setUserName(response.data[0].hotel_name)
-        if (response.data[0].img === undefined) {
+        if(response.data.data[0].tycoon_id === undefined || response.data.data[0].tycoon_id === null){
+          setTypeId('NULL')
+        setUserName("NULL")
+        }else{
+          setTypeId(response.data.data[0].tycoon_id.email)
+          setUserName(response.data.data[0].tycoon_id.username)
+        }
+        if (response.data.data[0].tycoon_id.profile_image === undefined||response.data.data[0].tycoon_id.profile_image === null||response.data.data[0].tycoon_id.profile_image === "") {
           setImageUser(backgroundImage)
         } else {
-          const urlImage = response.data[0].img
+          const urlImage = response.data.data[0].tycoon_id.profile_image
           console.log(urlImage)
           setImageUser(urlImage)
         }
@@ -74,12 +79,10 @@ function Header({ children, idProfileUser }) {
         <Grid item>
           <MDBox height="100%" mt={0.5} lineHeight={1}>
             <MDTypography variant="h5" fontWeight="medium">
-              {/* {userName} */}
-              Tycoon
+              {userName}
             </MDTypography>
             <MDTypography variant="button" color="text" fontWeight="regular">
-              {/* {TypeId} */}
-              tycoon@gmail.com
+              {TypeId}
             </MDTypography>
           </MDBox>
         </Grid>

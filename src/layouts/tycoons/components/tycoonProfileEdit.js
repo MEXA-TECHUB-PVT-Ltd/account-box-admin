@@ -23,7 +23,7 @@ import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import MDSnackbar from "components/MDSnackbar";
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 const style = {
     position: 'absolute',
@@ -43,6 +43,8 @@ const override = {
     //   borderColor: 'red',
 }
 const color = "#F69920"
+const color1 = "black"
+
 function DispachersProfile() {
     const { state } = useLocation();
     const navigate = useNavigate();
@@ -129,36 +131,45 @@ function DispachersProfile() {
             bgWhite
         />
     );
+    const [loading2, setLoading2] = useState(false)
+
     const submitHandlerUpdate = () => {
         if (userNameTycoonEdit === '' || statusTycoonEdit === '' || no_of_shops_createdTycoonEdit === '') {
             // setOpenEdit(false)
-            setSuccessSBVV(true)
+            setLoading2(true)
+            setTimeout(() => {
+                setSuccessSBVV(true)
+                setLoading2(false)
+            }, 1000)
         } else {
-
-            axios.put(`${url}api/tycoon/update-credentials`, {
-                _id: IdDataEdit,
-                profile_image: companyLogoEdit,
-                username: userNameTycoonEdit,
-                status: statusTycoonEdit,
-                no_of_shops_created: no_of_shops_createdTycoonEdit,
-
-
-            }, { headers }).then(response => {
-                console.log(response)
-                if (response.data.message === "Updated Successfully") {
-                    // setOpenEdit(false)
-                    setSuccessSBVVEdit(true)
-                    getAllData();
-                    setcompanyLogo('')
+            setLoading2(true)
+            setTimeout(() => {
+                axios.put(`${url}api/tycoon/update-credentials`, {
+                    _id: IdDataEdit,
+                    profile_image: companyLogoEdit,
+                    username: userNameTycoonEdit,
+                    status: statusTycoonEdit,
+                    no_of_shops_created: no_of_shops_createdTycoonEdit,
 
 
+                }, { headers }).then(response => {
+                    console.log(response)
+                    if (response.data.message === "Updated Successfully") {
+                        // setOpenEdit(false)
+                        setSuccessSBVVEdit(true)
+                        getAllData();
+                        setcompanyLogo('')
 
-                }
 
-            })
-                .catch(err => {
-                    console.log(err)
+
+                    }
+
                 })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                setLoading2(false)
+            }, 1000)
         }
     }
     const backTotycoon = () => {
@@ -279,9 +290,19 @@ function DispachersProfile() {
 
                                         </Grid>
                                         <Grid item xs={12} md={4}>
-                                            <MDButton style={{ width: '100%', color: 'white', borderRadius: '10px' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerUpdate() }}>
-                                                Update
-                                            </MDButton>
+                                            {loading2 ?
+
+                                                <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                                                    <ClipLoader color={color1} loading={loading2}
+                                                        css={override}
+                                                        size={10}
+                                                    />
+                                                </MDButton>
+                                                :
+                                                <MDButton style={{ width: '100%', color: 'white', borderRadius: '10px' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandlerUpdate() }}>
+                                                    Update
+                                                </MDButton>
+                                            }
                                         </Grid>
 
                                     </Grid>
