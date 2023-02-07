@@ -11,7 +11,13 @@ import MDSnackbar from "components/MDSnackbar";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/curve.png";
+import ClipLoader from "react-spinners/ClipLoader";
 
+const color = "black"
+const override = {
+  display: ' block',
+  margin: '0 auto',
+}
 function Cover() {
   const navigate = useNavigate();
   const headers = {
@@ -42,37 +48,53 @@ function Cover() {
   const closeErrorSBEmpty = () => setErrorSBEmpty(false);
   const closeErrorUpdate = () => setErrorUpdate(false);
   const closeErrorSBOTP = () => setErrorSBOTP(false);
-// Send Email Otp 
+  const [loadingloader, setloadingloader] = useState(false)
+  // Send Email Otp 
   const sendEmailOtp = () => {
-    axios.post(`${url}api/admin/forget-password`, {
-      email: email,
-    }, { headers }).then(response => {
-      console.log(response)
-      if (response.data.message === "Email Id not Exist") {
-        setErrorSB(true)
-      } else {
-        setLoading(true)
-        setLoading1(false)
-        setLoadingpassword(false)
-        setOtpCodeAdmin(response.data.otp)
-        setAdminEmail(response.data.data.email)
-        setAdminIDLogin(response.data.data._id)
-      }
+    setloadingloader(true)
+    setTimeout(() => {
+      axios.post(`${url}api/admin/forget-password`, {
+        email: email,
+      }, { headers }).then(response => {
+        console.log(response)
+        if (response.data.message === "Email Id not Exist") {
+          setErrorSB(true)
+        } else {
+          setLoading(true)
+          setLoading1(false)
+          setLoadingpassword(false)
+          setOtpCodeAdmin(response.data.otp)
+          setAdminEmail(response.data.data.email)
+          setAdminIDLogin(response.data.data._id)
+        }
 
-    })
-      .catch(err => {
-        console.log(err)
       })
+        .catch(err => {
+          console.log(err)
+        })
+      setloadingloader(false)
+
+    }, 1000)
   }
 
-// Update Password 
+  // Update Password 
   const UpdatePassword = () => {
     if (email === "" || newPassword === "") {
+      setloadingloader(true)
+    setTimeout(() => {
       setErrorSBEmpty(true)
+      setloadingloader(false)
+  }, 1000)
     } else if (newPassword.length < 6) {
+      setloadingloader(true)
+    setTimeout(() => {
       setErrorlengthSBPass(true)
+      setloadingloader(false)
+    }, 1000)
     } else {
       // navigate('/authentication/sign-in');
+      setloadingloader(true)
+    setTimeout(() => {
       axios.put(`${url}api/admin/update-credentials`, {
         email: AdminEmail,
         password: newPassword,
@@ -91,7 +113,10 @@ function Cover() {
         .catch(err => {
           console.log(err)
         })
+        setloadingloader(false)
+      }, 1000)
     }
+    
 
   }
   // Notifications 
@@ -108,6 +133,9 @@ function Cover() {
     />
   );
   const sendVerifyOtp = () => {
+    setloadingloader(true)
+    setTimeout(() => {
+
     console.log(otpCodeAdmin)
     console.log(otpCode)
     if (otpCodeAdmin == otpCode) {
@@ -121,6 +149,8 @@ function Cover() {
       console.log('notr sdfb')
       setErrorSBOTP(true)
     }
+    setloadingloader(false)
+  }, 1000)
 
   }
   const renderErrorSBEmpty = (
@@ -238,20 +268,56 @@ function Cover() {
             </MDBox>
             <MDBox mt={6} mb={1}>
 
-              {loading1 ? <MDButton variant="gradient" color="error" onClick={sendEmailOtp} fullWidth>
-                send Otp
-              </MDButton> : null}
+              {loading1 ?
+                <>
+                  {loadingloader ?
+                    <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                      <ClipLoader color={color} loading={loadingloader}
+                        css={override}
+                        size={10}
+                      />
+                    </MDButton>
+                    :
+                    <MDButton variant="gradient" color="error" onClick={sendEmailOtp} fullWidth>
+                      send Otp
+                    </MDButton>}
+                </>
+                : null}
 
-              {loading ? <MDButton variant="gradient" color="error" onClick={sendVerifyOtp} fullWidth>
-                verify
-              </MDButton> : null}
+              {loading ? <>
+                {loadingloader ?
+                  <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                    <ClipLoader color={color} loading={loadingloader}
+                      css={override}
+                      size={10}
+                    />
+                  </MDButton>
+                  :
+                  <MDButton variant="gradient" color="error" onClick={sendVerifyOtp} fullWidth>
+                    verify
+                  </MDButton>
+                }
+              </>
+                : null}
               {loadingPassword ?
-                <MDButton variant="gradient"
+              <>
+               {loadingloader ?
+                  <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                    <ClipLoader color={color} loading={loadingloader}
+                      css={override}
+                      size={10}
+                    />
+                  </MDButton>
+                  :
+              <MDButton variant="gradient"
                   color="error"
                   onClick={UpdatePassword}
                   fullWidth>
                   update
-                </MDButton> : null}
+                </MDButton>
+}
+              </>
+                 : null}
             </MDBox>
           </MDBox>
         </MDBox>

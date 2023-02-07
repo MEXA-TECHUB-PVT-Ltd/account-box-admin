@@ -19,6 +19,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import DummyImg from "assets/images/dummy.jpg"
 const style = {
     position: 'absolute',
     top: '50%',
@@ -139,12 +140,12 @@ function Users() {
             title: 'Name', field: 'username', width: '20%', render: (row) =>
               <>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} md={4}>
-                   {row.tycoon_id===null?<span>Null</span>: <Avatar src={`${url}${row.tycoon_id.profile_image}`} />}
+                  <Grid item xs={12} md={6}>
+                   {(row.tycoon_id===null)||(row.tycoon_id===undefined)?<Avatar src={DummyImg}/>: <Avatar src={`${url}${row.tycoon_id.profile_image}`} />}
                    
                   </Grid>
-                  <Grid item xs={12} md={8} style={{ marginTop: '10px' }}>
-                  {row.tycoon_id===null?<span>Null</span>:<span>{row.tycoon_id.username}</span>}
+                  <Grid item xs={12} md={6} style={{ marginTop: '10px' }}>
+                  {(row.tycoon_id===null)||(row.tycoon_id===undefined)?<span>Null</span>:<span>{row.tycoon_id.username}</span>}
                   </Grid>
                 </Grid>
               </>
@@ -153,7 +154,7 @@ function Users() {
 
         { title: 'Email', field: 'email', width: '10%' , render: (row) =>
         <>
-           {row.tycoon_id===null?<span>Null</span>:<span>{row.tycoon_id.email}</span>}
+           {(row.tycoon_id===null)||(row.tycoon_id===undefined)?<span>Null</span>:<span>{row.tycoon_id.email}</span>}
         </> },
          { title: 'Subscription Plan', field: 'subscription_plans_id', width: '10%' , render: (row) =>
          <>
@@ -309,7 +310,7 @@ function Users() {
                                                                 </MDButton>
                                                             </Grid>
                                                             <Grid item xs={6} md={6}>
-                                                                <Button autoFocus style={{ border: '1px solid #F2C75B', color: '#F2C75B', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
+                                                                <Button size="small" autoFocus style={{ border: '1px solid #F2C75B', color: '#F2C75B', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
                                                                     No
                                                                 </Button>
                                                             </Grid>

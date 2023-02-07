@@ -21,6 +21,8 @@ import Box from '@mui/material/Box';
 import './stylesheet.css'
 import PropTypes from 'prop-types';
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import MDTypography from "components/MDTypography";
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,16 +66,26 @@ function Profile({ idProfile }) {
   const [createdAt, setcreatedAt] = useState('');
   const [expiry_date, setexpiry_date] = useState('');
   const [start_date, setstart_date] = useState('');
+  const [shopSNull, setshopSNull] = useState(false)
   const getAllDataSubscription = () => {
     axios.get(`${url}api/subscription_history/get-subscription-history-by-TycoonId/${idProfile}`)
       .then((response) => {
         console.log('Data User Picdddddsaasdd')
-        console.log(response.data.data[0])
-        setSubscriptionName(response.data.data[0].subscription_plans_id.name)
-        setnoOfShops(response.data.data[0].subscription_plans_id.no_of_shops)
-        setPricePerMonth(response.data.data[0].subscription_plans_id.price_per_month)
-        setexpiry_date(response.data.data[0].end_date)
-        setstart_date(response.data.data[0].start_date)
+        console.log(response.data)
+        if (response.data.data.length === 0 || response.data.data[0].subscription_plans_id === null || response.data.data[0].subscription_plans_id === undefined) {
+          setSubscriptionName('NULL')
+          setnoOfShops(0)
+          setPricePerMonth('NULL')
+          setexpiry_date('NULL')
+          setstart_date('NULL')
+        } else {
+          setSubscriptionName(response.data.data[0].subscription_plans_id.name)
+          setnoOfShops(response.data.data[0].subscription_plans_id.no_of_shops)
+          setPricePerMonth(response.data.data[0].subscription_plans_id.price_per_month)
+          setexpiry_date(response.data.data[0].end_date)
+          setstart_date(response.data.data[0].start_date)
+        }
+
       })
       .catch(error => console.error(`Error:${error}`));
   }
@@ -98,7 +110,7 @@ function Profile({ idProfile }) {
   const getAllDataPosts = () => {
     axios.get(`${url}api/shop/get-all-tycoon-shops/${idProfile}`)
       .then((response) => {
-        console.log('Data Guests Hotel')
+        console.log('Data Guests Hotel 1')
         console.log(response.data)
         // if(response.data.data.length===0){
         //   const users= [
@@ -110,14 +122,22 @@ function Profile({ idProfile }) {
         // ]
         //   setDispacherDriver(users)
         // }else{
+        if (response.data.data.length === 0 || response.data.count === 0) {
+          setshopSNull(true)
+          console.log('empty ')
+        } else {
           setDispacherDriver(response.data.data)
+          setshopSNull(false)
+
+
+        }
 
         // }
-       
+
       })
       .catch(error => console.error(`Error:${error}`));
   }
-  
+
   useEffect(() => {
     getAllData();
     getAllDataPosts();
@@ -175,7 +195,7 @@ function Profile({ idProfile }) {
                       </Icon>
                     }
                   />
-                 
+
                 </Tabs>
               </AppBar>
               <TabPanel value={tabValue} index={0}>
@@ -266,32 +286,43 @@ function Profile({ idProfile }) {
                   ))}
                 </Grid> */}
                 <Grid container spacing={6}>
-                  {/* Shops  */}
-                  {DispacherDriver.map((row) => (
-                    <>
-                      <Grid item xs={12} md={6} xl={3} style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          EditData(row._id)
-                        }}>
-                        <DefaultProjectCard
-                          image={`${url}${row.img}`}
-                          label={`Name: ${row.name}`}
-                          title="shop"
-                          description={`created at: ${row.created_at}`}
-                          action={{
-                            type: "internal",
-                            route: "/pages/profile/profile-overview",
-                            color: "info",
-                            label: "view project",
-                          }}
-                        />
-                      </Grid>
-                    </>
-                  ))}
+
+                  {shopSNull? <>
+                    {/* Shops  */}
+                    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                      No Shops Added
+                    </MDTypography>
+
+                  </> : <>
+                    {/* Shops  */}
+                    {DispacherDriver.map((row) => (
+                      <>
+                        <Grid item xs={12} md={6} xl={3} style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            EditData(row._id)
+                          }}>
+                          <DefaultProjectCard
+                            image={`${url}${row.img}`}
+                            label={`Name: ${row.name}`}
+                            title="shop"
+                            description={`created at: ${row.created_at}`}
+                            action={{
+                              type: "internal",
+                              route: "/pages/profile/profile-overview",
+                              color: "info",
+                              label: "view project",
+                            }}
+                          />
+                        </Grid>
+                      </>
+                    ))}
+
+                  </>}
 
                 </Grid>
+
               </TabPanel>
-             
+
 
 
             </Grid>

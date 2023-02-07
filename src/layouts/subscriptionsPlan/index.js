@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 import CloseIcon from '@mui/icons-material/Close';
+import ClipLoader from "react-spinners/ClipLoader";
 // Billing page components
 import TextField from '@mui/material/TextField';
 const style = {
@@ -27,7 +28,7 @@ const style = {
     width: 400,
     bgcolor: 'beige',
     borderRadius: '10px',
-    padding:"0px 40px 40px 40px",
+    padding: "0px 40px 40px 40px",
     boxShadow: 24,
     // p: 4,
 };
@@ -49,6 +50,8 @@ const override = {
     //   borderColor: 'red',
 }
 const color = "#F69920"
+const color1 = "black"
+
 function Users() {
     // get 
     const headers = {
@@ -60,6 +63,7 @@ function Users() {
     const closeSuccessSBVV = () => setSuccessSBVV(false);
     const closeSuccessDelete = () => setSuccessDelete(false);
 
+    const [loading2, setLoading2] = useState(false)
     const [successDelete, setSuccessDelete] = useState(false);
     const [successSB, setSuccessSB] = useState(false);
     const [successSBV, setSuccessSBV] = useState(false);
@@ -101,7 +105,7 @@ function Users() {
             bgWhite
         />
     );
-    
+
     const renderSuccessSbVerify = (
         <MDSnackbar
             icon="notifications"
@@ -173,99 +177,115 @@ function Users() {
     const handleCloseAdd = () => setOpenAdd(false);
 
     const submitHandler = () => {
-        if(SubscriptionName===''||SubscriptionShops===''||SubscriptionPrice===''){
-            setOpenAdd(false)
-            setSuccessSBVV(true)
-        }else{
-            axios.put(`${url}api/subscriptionPlan/update`, {
-                _id: SubscriptionPlanId,
-                name: SubscriptionName,
-                no_of_shops: SubscriptionShops,
-                price_per_month: SubscriptionPrice
-            }, { headers }).then(response => {
-                console.log(response)
-                setOpen(false)
-                setSuccessSB(true)
-                getAllData();
+        if (SubscriptionName === '' || SubscriptionShops === '' || SubscriptionPrice === '') {
+            setLoading2(true)
+            setTimeout(() => {
+                setOpenAdd(false)
+                setSuccessSBVV(true)
+                setLoading2(false)
+            }, 1000)
+        } else {
+            setLoading2(true)
+            setTimeout(() => {
+                axios.put(`${url}api/subscriptionPlan/update`, {
+                    _id: SubscriptionPlanId,
+                    name: SubscriptionName,
+                    no_of_shops: SubscriptionShops,
+                    price_per_month: SubscriptionPrice
+                }, { headers }).then(response => {
+                    console.log(response)
+                    setOpen(false)
+                    setSuccessSB(true)
+                    getAllData();
 
-            })
-                .catch(err => {
-                    console.log(err)
                 })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                setLoading2(false)
+            }, 1000)
         }
-       
+
 
     }
-      // Delete 
-      const [visibleDelete, setVisibleDelete] = useState(false)
-    
+    // Delete 
+    const [visibleDelete, setVisibleDelete] = useState(false)
+
     const deleteData = () => {
         setOpen(false)
         setVisibleDelete(true)
         // setSuccessDelete(true)
-    // axios.delete(`${url}api/subscriptionPlan/delete/${SubscriptionPlanId}`
-    //     , { headers })
-    //     .then(res => {
+        // axios.delete(`${url}api/subscriptionPlan/delete/${SubscriptionPlanId}`
+        //     , { headers })
+        //     .then(res => {
 
-    //         console.log(res.data);
-    //         if (res.data.message === "Deleted Successfully") {
-    //             setVisibleDelete(false)
-    //             setSuccessDelete(true)
-    //             getAllData();
-    //             setLoadingLoader(false)
-    //         } else {
+        //         console.log(res.data);
+        //         if (res.data.message === "Deleted Successfully") {
+        //             setVisibleDelete(false)
+        //             setSuccessDelete(true)
+        //             getAllData();
+        //             setLoadingLoader(false)
+        //         } else {
 
-    //         }
+        //         }
 
-    //     }).catch(err => {
-    //         console.log(err)
-    //     })
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
 
-}
-const deleteDataProduct= () => {
-     axios.delete(`${url}api/subscriptionPlan/delete/${SubscriptionPlanId}`
-        , { headers })
-        .then(res => {
+    }
+    const deleteDataProduct = () => {
+        axios.delete(`${url}api/subscriptionPlan/delete/${SubscriptionPlanId}`
+            , { headers })
+            .then(res => {
 
-            console.log(res.data);
-            if (res.data.message === "Deleted Successfully") {
-                setVisibleDelete(false)
-                setSuccessDelete(true)
-                getAllData();
-                setLoadingLoader(false)
-            } else {
+                console.log(res.data);
+                if (res.data.message === "Deleted Successfully") {
+                    setVisibleDelete(false)
+                    setSuccessDelete(true)
+                    getAllData();
+                    setLoadingLoader(false)
+                } else {
 
-            }
+                }
 
-        }).catch(err => {
-            console.log(err)
-        })
-}
-    const submitHandler1 = () => {
-        if(SubscriptionNameAdd===''||SubscriptionShopsAdd===''||SubscriptionPriceAdd===''){
-            setSuccessSBVV(true)
-        }else{
-            axios.post(`${url}api/subscriptionPlan/create`, {
-                name: SubscriptionNameAdd,
-                no_of_shops: SubscriptionShopsAdd,
-                price_per_month: SubscriptionPriceAdd,
-                is_free_trail:'false'
-            }, { headers }).then(response => {
-                console.log(response);
-                setSuccessSBV(true)
-                setOpenAdd(false)
-                setSubscriptionNameAdd('')
-                setSubscriptionShopsAdd('')
-                setSubscriptionPriceAdd('')
-
-                getAllData();
-    
+            }).catch(err => {
+                console.log(err)
             })
-                .catch(err => {
-                    console.log(err)
+    }
+    const submitHandler1 = () => {
+        if (SubscriptionNameAdd === '' || SubscriptionShopsAdd === '' || SubscriptionPriceAdd === '') {
+            setLoading2(true)
+            setTimeout(() => {
+                setSuccessSBVV(true)
+                setLoading2(false)
+            }, 1000)
+        } else {
+            setLoading2(true)
+            setTimeout(() => {
+                axios.post(`${url}api/subscriptionPlan/create`, {
+                    name: SubscriptionNameAdd,
+                    no_of_shops: SubscriptionShopsAdd,
+                    price_per_month: SubscriptionPriceAdd,
+                    is_free_trail: 'false'
+                }, { headers }).then(response => {
+                    console.log(response);
+                    setSuccessSBV(true)
+                    setOpenAdd(false)
+                    setSubscriptionNameAdd('')
+                    setSubscriptionShopsAdd('')
+                    setSubscriptionPriceAdd('')
+
+                    getAllData();
+
                 })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                setLoading2(false)
+            }, 1000)
         }
-        
+
 
         // axios.put(`${url}api/subscriptionPlan/update`, {
         //     _id: SubscriptionPlanId,
@@ -379,7 +399,7 @@ const deleteDataProduct= () => {
                                                     </Grid>
                                                     <Grid item xs={6} md={6}>
                                                         <TextField
-                                                             type="number"
+                                                            type="number"
                                                             value={SubscriptionPrice}
                                                             onChange={(e) => setSubscriptionPrice(e.target.value)}
                                                             style={{ width: '100%' }} variant="outlined" />
@@ -395,17 +415,27 @@ const deleteDataProduct= () => {
                                                             onChange={(e) => setSubscriptionShops(e.target.value)} style={{ width: '100%' }} variant="outlined" />
 
                                                     </Grid>
-                                
+
                                                     <Grid item xs={12} md={2}>
 
                                                     </Grid>
                                                     <Grid item xs={12} md={4}>
-                                                        <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler() }}>
-                                                            Update
-                                                        </MDButton>
+                                                        {loading2 ?
+
+                                                            <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                                                                <ClipLoader color={color1} loading={loading2}
+                                                                    css={override}
+                                                                    size={10}
+                                                                />
+                                                            </MDButton>
+                                                            :
+                                                            <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler() }}>
+                                                                Update
+                                                            </MDButton>
+                                                        }
                                                     </Grid>
                                                     <Grid item xs={12} md={4}>
-                                                    <MDButton style={{ width: '100%' }} variant="gradient" color="primary" fullWidth onClick={() => { deleteData() }}>
+                                                        <MDButton style={{ width: '100%' }} variant="gradient" color="primary" fullWidth onClick={() => { deleteData() }}>
                                                             Delete
                                                         </MDButton>
                                                     </Grid>
@@ -438,8 +468,8 @@ const deleteDataProduct= () => {
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item xs={1} md={1}>
-                                                    {/* <MDButton  variant="gradient" color="error"  > */}
-                                                    <CloseIcon onClick={handleCloseAdd} style={{ cursor: 'pointer' }} />
+                                                        {/* <MDButton  variant="gradient" color="error"  > */}
+                                                        <CloseIcon onClick={handleCloseAdd} style={{ cursor: 'pointer' }} />
 
                                                         {/* </MDButton> */}
                                                     </Grid>
@@ -475,7 +505,7 @@ const deleteDataProduct= () => {
                                                     </Grid>
                                                     <Grid item xs={6} md={6}>
                                                         <TextField value={SubscriptionShopsAdd}
-                                                          type="number"
+                                                            type="number"
                                                             onChange={(e) => setSubscriptionShopsAdd(e.target.value)} style={{ width: '100%' }} variant="outlined" />
 
                                                     </Grid>
@@ -483,9 +513,19 @@ const deleteDataProduct= () => {
 
                                                     </Grid>
                                                     <Grid item xs={12} md={4}>
-                                                        <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler1() }}>
-                                                            Submit
-                                                        </MDButton>
+                                                        {loading2 ?
+
+                                                            <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                                                                <ClipLoader color={color1} loading={loading2}
+                                                                    css={override}
+                                                                    size={10}
+                                                                />
+                                                            </MDButton>
+                                                            :
+                                                            <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler1() }}>
+                                                                Submit
+                                                            </MDButton>
+                                                        }
                                                     </Grid>
                                                     <Grid item xs={12} md={4}>
 
@@ -496,41 +536,41 @@ const deleteDataProduct= () => {
                                     </Modal>
                                 </div>
                                 <div>
-                                                <Modal
-                                                    open={visibleDelete}
-                                                    onClose={() => setVisibleDelete(false)}
-                                                    aria-labelledby="modal-modal-title"
-                                                    aria-describedby="modal-modal-description"
-                                                >
-                                                    <Box sx={style1}>
-                                                        <Grid container spacing={2} align="center">
-                                                            <Grid item xs={12} md={12}>
-                                                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                                                    Are you sure you want to delete<br/> this Subscription Plan?
-                                                                </Typography>
-                                                            </Grid>
-                                                            <Grid item xs={6} md={6}>
-                                                                {/* <Button autoFocus onClick={deleteDataProduct} style={{ background: 'linear-gradient(195deg, #5fb663, #3ccf42)', color: 'white', borderRadius: '10px' }}>
+                                    <Modal
+                                        open={visibleDelete}
+                                        onClose={() => setVisibleDelete(false)}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style1}>
+                                            <Grid container spacing={2} align="center">
+                                                <Grid item xs={12} md={12}>
+                                                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                                                        Are you sure you want to delete<br /> this Subscription Plan?
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={6}>
+                                                    {/* <Button autoFocus onClick={deleteDataProduct} style={{ background: 'linear-gradient(195deg, #5fb663, #3ccf42)', color: 'white', borderRadius: '10px' }}>
                                                                 Yes
                                                             </Button> */}
-                                                                <MDButton variant="gradient" color="error" size="small" onClick={deleteDataProduct} style={{ background: '#CE69EB', color: 'white', borderRadius: '10px' }}>
-                                                                    Yes
-                                                                </MDButton>
-                                                            </Grid>
-                                                            <Grid item xs={6} md={6}>
-                                                                <Button autoFocus style={{ border: '1px solid #CE69EB', color: '#CE69EB', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
-                                                                    No
-                                                                </Button>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </Box>
-                                                </Modal>
-                                            </div>
-                                <div>
-                                {renderSuccessSb}
+                                                    <MDButton variant="gradient" color="error" size="small" onClick={deleteDataProduct} style={{ background: '#CE69EB', color: 'white', borderRadius: '10px' }}>
+                                                        Yes
+                                                    </MDButton>
+                                                </Grid>
+                                                <Grid item xs={6} md={6}>
+                                                    <Button autoFocus size="small" style={{ border: '1px solid #CE69EB', color: '#CE69EB', borderRadius: '10px' }} onClick={() => setVisibleDelete(false)}>
+                                                        No
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Box>
+                                    </Modal>
                                 </div>
                                 <div>
-                                {renderSuccessSbVerify}
+                                    {renderSuccessSb}
+                                </div>
+                                <div>
+                                    {renderSuccessSbVerify}
                                 </div>
                                 <div>
                                     {renderSuccessSbVV}
@@ -538,7 +578,7 @@ const deleteDataProduct= () => {
                                 <div>
                                     {renderSuccessDelete}
                                 </div>
-                               
+
                             </Grid>
                         </Grid>
                     </MDBox>

@@ -17,6 +17,8 @@ import homeDecor2 from "assets/images/Cashiers.png";
 import homeDecor3 from "assets/images/Inventories.png";
 import homeDecor4 from "assets/images/products.png";
 import MDTypography from "components/MDTypography";
+import DummyImg from "assets/images/dummy.jpg"
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,28 +66,55 @@ function Profile({ idProfile }) {
         console.log(response.data.data[0])
         if (response.data.data[0].img === undefined) {
           console.log('empty image')
+          setShopImage(DummyImg)
+
         } else {
           console.log(response.data.data[0].img)
           setShopImage(response.data.data[0].img)
         }
         setShopName(response.data.data[0].name)
         setCreatedAtShop(response.data.data[0].created_at)
-        setTycoonNAme(response.data.data[0].tycoon_id.username)
-        setTycoonEmail(response.data.data[0].tycoon_id.email)
-        setManagerName(response.data.data[0].manager_id.name)
-        setManagerEmail(response.data.data[0].manager_id.email)
+        if(response.data.data[0].shop_products.length===0){
+          console.log('emptycccc')
+
+        }else{
+          console.log('empty o')
+          setDispacherDriver(response.data.data[0].shop_products)
+          setLengthProducts(response.data.data[0].shop_products.length)
+        }
+        if(response.data.data[0].tycoon_id===undefined||response.data.data[0].tycoon_id===null){
+          setTycoonNAme('NULL')
+          setTycoonEmail('NULL')
+        }else{
+          setTycoonNAme(response.data.data[0].tycoon_id.username)
+          setTycoonEmail(response.data.data[0].tycoon_id.email)
+        }
+        if(response.data.data[0].manager_id===undefined||response.data.data[0].manager_id===null){
+          setManagerName('NULL')
+          setManagerEmail('NULL')
+        }else{
+          setManagerName(response.data.data[0].manager_id.name)
+          setManagerEmail(response.data.data[0].manager_id.email)
+        }
+       
+       
       })
       .catch(error => console.error(`Error:${error}`));
   }
   const getAllDataPosts = () => {
-    axios.get(`${url}api/shopProducts/get-all-shop-products/${idProfile}`)
-      .then((response) => {
-        console.log('Data Guests Products ')
-        console.log(response.data)
-        setDispacherDriver(response.data.data)
-        setLengthProducts(response.data.data.length)
-      })
-      .catch(error => console.error(`Error:${error}`));
+    // axios.get(`${url}api/shop/get-Shop-by-ID/${idProfile}`)
+    //   .then((response) => {
+    //     console.log('Data Guests Products ')
+    //     console.log(response)
+    //     // if(response.data){
+    //     //   console.log('grh')
+    //     // }else{
+    //     //   console.log('dfdgdh')
+    //     // }
+    //     // setDispacherDriver(response.data.data)
+    //     // setLengthProducts(response.data.data.length)
+    //   })
+    //   .catch(error => console.error(`Error:${error}`));
   }
   const getAllDataOrders = () => {
     axios.get(`${url}api/shopCashiers/get-all-shop-cashiers/${idProfile}`)
@@ -199,11 +228,12 @@ function Profile({ idProfile }) {
             <>
               <Grid item xs={12} md={6} xl={3} style={{ cursor: "pointer" }}
               >
-                <DefaultProjectCard
+                
+                  <DefaultProjectCard
                   image={homeDecor4}
-                  label={` Name: ${row.product_id.name}`}
+                  label={` Name: ${row.name}`}
                   title="shop"
-                  description={`Price: ${row.product_id.price}`}
+                  description={`Price: ${row.price}`}
                   action={{
                     type: "internal",
                     route: "/pages/profile/profile-overview",

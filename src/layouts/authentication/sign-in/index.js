@@ -18,9 +18,15 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 import MDSnackbar from "components/MDSnackbar";
+import ClipLoader from "react-spinners/ClipLoader";
+
 // Images
 import bgImage from "assets/images/curve.png";
-
+const color = "black"
+const override = {
+  display: ' block',
+  margin: '0 auto',
+}
 function Basic() {
   const [values, setValues] = React.useState({
     password: '',
@@ -40,7 +46,7 @@ function Basic() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  const [loading2, setLoading2] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorSB, setErrorSB] = useState(false);
@@ -56,11 +62,21 @@ function Basic() {
   }
   const submitHandler = () => {
     if (email === "" || password === "") {
+      setLoading2(true)
+      setTimeout(() => {
       setErrorSB(true)
+      setLoading2(false)
+    }, 1000)
     } else if (password.length < 6) {
+      setLoading2(true)
+      setTimeout(() => {
       console.log('error')
       setErrorlengthSBPass(true)
+      setLoading2(false)
+    }, 1000)
     } else {
+      setLoading2(true)
+      setTimeout(() => {
       axios.put(`${url}api/admin/login`, {
         email: email,
         password: password,
@@ -77,6 +93,8 @@ function Basic() {
           console.log(err)
           setErrorSBPass(true)
         })
+        setLoading2(false)
+      }, 1000)
     }
   }
   const renderErrorSB = (
@@ -196,9 +214,22 @@ function Basic() {
               </FormControl>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler() }}>
-                sign in
-              </MDButton>
+              {loading2 ?
+
+                    <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth >
+                    <ClipLoader color={color} loading={loading2}
+                    css={override}
+                    size={10}
+                  />
+                </MDButton>
+                  
+
+
+                :
+                <MDButton style={{ width: '100%' }} variant="gradient" color="error" fullWidth onClick={() => { submitHandler() }}>
+                  sign in
+                </MDButton>
+              }
             </MDBox>
             <MDBox mt={1} mb={0} textAlign="right">
               <MDTypography
